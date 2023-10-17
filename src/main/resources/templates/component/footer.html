@@ -3,14 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    /* 삼등분 스타일 */
+    .footer-container {
+      display: flex;
+      justify-content: space-around; /* 섹션 간의 간격을 조절합니다 */
+      background-color: #FFFFFF; /* 흰색 배경색으로 변경 */
+      padding: 50px 300px;
+      color: #000000; /* 검은색 텍스트 색상으로 변경 */
+    }
+    .footer-section {
+      width: 30%;
+    }
+    .footer-section p {
+      margin: 0; /* 문단의 기본 마진을 제거하여 간격이 올바르게 적용되도록 함 */
+    }
+    .footer-section a {
+      text-decoration: none; /* 링크의 밑줄 제거 */
+      color: #808080; /* 링크의 색상 설정 (회색) */
+      transition: color 0.3s; /* 호버 효과의 지속 시간 설정 (색상 변화에만 적용) */
+      margin-bottom: 20px; /* 링크 간격을 넓힘 */
+      display: block; /* 블록 레벨 요소로 변경하여 간격이 적용되도록 함 */
+    }
+    .footer-section a:hover {
+      color: #FF69B4; /* 호버 시에 색상 변경 (분홍색) */
+    }
+    .footer-section .bold-text {
+      font-weight: bold; /* 텍스트를 진하게 만듭니다. */
+      color: #FF69B4; /* "정보" 항목의 색상 (분홍색) */
+    }
+    .footer-section .bold-text + a {
+      margin-top: 20px; /* "정보" 섹션 아래의 간격을 늘립니다 */
+    }
+    .footer-section .bold-text + p {
+      margin-top: 20px; /* "정보" 섹션 아래의 간격을 늘립니다 */
+    }
+  </style>
 </head>
 <body>
-<div th:fragment="footer" id="footer">
-  <script>
-    const date = new Date();
-    const footer = document.getElementById("footer");
-    footer.innerHTML = "<p class='text-center'>&copy;  " + date.getFullYear() + "&nbsp; codingrecipe All rights reserved. </p>";
-  </script>
+<div class="footer-container" th:fragment="footer">
+  <div class="footer-section">
+    <!-- 첫 번째 섹션 내용 -->
+    <p class="text-center bold-text">정보</p>
+    <a th:href="#">게시판</a>
+    <a th:href="#">친목 모임</a>
+    <a th:href="#">고객센터</a>
+    <a th:href="#">포인트</a>
+  </div>
+  <div class="footer-section">
+    <!-- 두 번째 섹션 내용 -->
+    <p class="text-center bold-text">사이트 소개</p>
+    <p style="color: #808080;">
+      본 사이트는 친목을 목적으로 만들어진 사이트입니다.<br>
+      사람들과의 만남을 원활하고 편하게 만들어주고<br>
+      관심사가 같은 사람들과 소통하여<br>
+      장기적으로 친목을 도와줄 수 있습니다.
+    </p>
+  </div>
+  <div class="footer-section">
+    <!-- 세 번째 섹션 내용 -->
+    <p class="text-center bold-text">친목친목</p>
+    <p style="color: #808080;">
+      대표 : 노신영 | 개인정보관리책임자 : 노신영<br>
+      이메일 : dmadkr6004@naver.com | 대표번호 : 032-123-1234<br>
+      주소 : 인천광역시 동구 어딘가<br>
+      운영시간 : (월~화) 오전 11:00 ~ 11:30
+    </p>
+  </div>
 </div>
 </body>
 </html>
