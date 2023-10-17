@@ -1,44 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    body {
+      background-color: #F5F5F5; /* 연한 회색 배경으로 설정합니다 */
+    }
+
+    #nav {
+      background-color: #FFFFFF;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .nav-link,
+    .btn {
+      font-size: 20px;
+      font-weight: normal;
+      color: #FF69B4;
+      margin: 10px 10px 10px 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-link:hover,
+    .btn:hover {
+      text-decoration: none;
+    }
+
+    .nav-link:last-child,
+    .btn:last-child {
+      margin-right: 0;
+    }
+
+    .nav-link.home {
+      font-size: 40px;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
 <div th:fragment="nav" id="nav">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid ms-5 me-5">
-      <a class="navbar-brand" href="#">Board</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/board/save">글작성</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/board">글목록</a>
-          </li>
-        </ul>
-        <form action="/board" method="get" class="d-flex" role="search">
-          <select name="type" class="form-select me-2 w-50">
-            <option value="boardWriter">작성자</option>
-            <option value="boardTitle">제목</option>
-          </select>
-          <input class="form-control me-2 w-auto" type="search" name="q" placeholder="검색어를 입력하세요"
-                 aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+  <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <div class="navbar-nav">
+        <a class="nav-link home" href="#">Home</a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link" href="#">친목친목</a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link" href="#">게시판</a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link" href="#">모임</a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="nav-link"></a>
+        <a class="btn" href="#">마이페이지</a>
+        <a class="btn" href="#">로그아웃</a>
       </div>
     </div>
   </nav>
-  <script>
-    const search_func = () => {
-      console.log("검색함수");
-    }
-  </script>
 </div>
-
 </body>
+
 </html>
