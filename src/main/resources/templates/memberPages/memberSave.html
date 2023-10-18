@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+    <!-- 필요한 CSS 링크 및 스타일을 여기에 추가하세요 -->
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-control {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+    <h1>회원가입</h1>
+</div>
+
+<div class="form-container">
+    <form id="signup-form" action="/member/save" method="post">
+        <label for="memberEmail">이메일:</label>
+        <input type="email" class="form-control" id="memberEmail" name="memberEmail" onblur="checkEmail_fn()"
+               placeholder="admin@member.com">
+        <p id="checkEmail" style="display: none"></p>
+
+        <label for="memberPassword">비밀번호:</label>
+        <input type="password" class="form-control" name="memberPassword" id="memberPassword"
+               placeholder="영문 소문자와 숫자 조합 4~12가지"><br>
+        <p id="password-error" class="error-message"></p>
+
+        <label for="memberPassword2">비밀번호 확인:</label>
+        <input type="password" class="form-control" name="memberPassword2" id="memberPassword2"
+               onblur="checkPassword_fn()"><br>
+        <p id="password-match-error" class="error-message"></p>
+
+        <label for="memberName">실명:</label>
+        <input type="text" class="form-control" name="memberName" id="memberName" placeholder="실명 입력"> <br>
+
+        <label for="memberBirth">생년월일:</label>
+        <input type="text" class="form-control" name="memberBirth" id="memberBirth" placeholder="YYYYMMDD"> <br>
+
+        <label for="memberArea">지역:</label>
+        <input type="text" class="form-control" name="memberArea" id="memberArea" placeholder="지역 입력"> <br>
+
+        <label for="memberMobile">휴대폰 번호:</label>
+        <input type="text" class="form-control" name="memberMobile" id="memberMobile" placeholder="'_'제외하고 숫자만 입력"> <br>
+
+        <label for="memberNickName">닉네임:</label>
+        <input type="text" class="form-control" name="memberNickName" id="memberNickName" placeholder="닉네임 입력"> <br>
+
+        <div class="error-message" id="error-message"></div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">회원가입</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+<script th:inline="javascript">
+    const checkEmail_fn = () => {
+        const memberEmail = document.getElementById("memberEmail").value;
+        const checkEmail = document.getElementById("checkEmail");
+        if (memberEmail.length > 0) {
+            $.ajax({
+                type: "post",
+                url: "/member/check",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    memberEmail: memberEmail
+                }),
+                success: function (response) {
+                    console.log("서버 응답:", response); // 응답을 콘솔에 출력
+                    checkEmail.innerHTML = "사용 가능한 이메일 입니다.";
+                    checkEmail.style.display = "block";
+                },
+                error: function (xhr, status, error) {
+                    console.error("에러 발생: ", error);
+                    checkEmail.innerHTML = "이미 사용중인 이메일 입니다.";
+                    checkEmail.style.display = "block";
+                }
+            });
+        } else {
+            checkEmail.style.display = "none";
+        }
+    };
+
+    const checkPassword_fn = () => {
+        const password = document.getElementById("memberPassword").value;
+        const password2 = document.getElementById("memberPassword2").value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,12}$/;
+
+        const passwordError = document.getElementById("password-error");
+        const passwordMatchError = document.getElementById("password-match-error");
+
+        if (!passwordPattern.test(password)) {
+            passwordError.textContent = "영문 소문자와 숫자 조합 4~12자리여야 합니다.";
+        } else {
+            passwordError.textContent = "";
+        }
+
+        if (password !== password2) {
+            passwordMatchError.textContent = "비밀번호가 일치하지 않습니다.";
+        } else {
+            passwordMatchError.textContent = "";
+        }
+    };
+
+    document.getElementById("signup-form").onsubmit = function(event) {
+        checkPassword_fn(); // 비밀번호 일치 여부 및 조건 검사
+        const errorMessage = document.getElementById("error-message");
+        const email = document.getElementById("memberEmail").value;
+        const password = document.getElementById("memberPassword").value;
+        const password2 = document.getElementById("memberPassword2").value;
+        const name = document.getElementById("memberName").value;
+        const birth = document.getElementById("memberBirth").value;
+        const area = document.getElementById("memberArea").value;
+        const mobile = document.getElementById("memberMobile").value;
+        const nickname = document.getElementById("memberNickName").value;
+
+        if (email === "" || password === "" || password2 === "" || name === "" || birth === "" || area === "" || mobile === "" || nickname === "") {
+            errorMessage.textContent = "모든 필드를 입력해주세요.";
+            event.preventDefault();
+        } else if (password !== password2) {
+            errorMessage.textContent = "비밀번호가 일치하지 않습니다.";
+            event.preventDefault();
+        } else {
+            errorMessage.textContent = "";
+        }
+    };
+</script>
+</body>
+</html>

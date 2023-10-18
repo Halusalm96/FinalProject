@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <div class="footer-container" th:fragment="footer">
   <style>
     /* 삼등분 스타일 */
     .footer-container {
@@ -41,14 +42,13 @@
   </style>
 </head>
 <body>
-<div class="footer-container" th:fragment="footer">
   <div class="footer-section">
     <!-- 첫 번째 섹션 내용 -->
     <p class="text-center bold-text">정보</p>
-    <a th:href="#">게시판</a>
-    <a th:href="#">친목 모임</a>
-    <a th:href="#">고객센터</a>
-    <a th:href="#">포인트</a>
+    <a href="/">게시판</a>
+    <a href="/">친목 모임</a>
+    <a href="/">고객센터</a>
+    <a href="/">포인트</a>
   </div>
   <div class="footer-section">
     <!-- 두 번째 섹션 내용 -->

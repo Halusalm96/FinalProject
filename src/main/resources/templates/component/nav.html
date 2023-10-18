@@ -4,10 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <div class="nav-container" th:fragment="nav">
   <style>
-    body {
-      background-color: #F5F5F5; /* 연한 회색 배경으로 설정합니다 */
-    }
 
     #nav {
       background-color: #FFFFFF;
@@ -27,7 +25,7 @@
       font-size: 20px;
       font-weight: normal;
       color: #FF69B4;
-      margin: 10px 10px 10px 10px;
+      margin: 10px 20px 10px 10px; /* 모임과 마이페이지 간격을 늘린 부분입니다 */
       text-decoration: none;
       cursor: pointer;
     }
@@ -48,47 +46,19 @@
     }
   </style>
 </head>
-
 <body>
-<div th:fragment="nav" id="nav">
-  <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <div class="navbar-nav">
-        <a class="nav-link home" href="#">Home</a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link" href="#">친목친목</a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link" href="#">게시판</a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link" href="#">모임</a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="nav-link"></a>
-        <a class="btn" href="#">마이페이지</a>
-        <a class="btn" href="#">로그아웃</a>
-      </div>
+<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <div class="navbar-nav">
+      <a class="nav-link home" href="#">Home</a>
+      <a class="nav-link" href="#">친목친목</a>
+      <a class="nav-link" href="#">게시판</a>
+      <a class="nav-link" href="#">모임</a>
+      <a class="btn" href="#">마이페이지</a>
+      <a class="btn" href="#">로그아웃</a>
     </div>
-  </nav>
+  </div>
+</nav>
 </div>
 </body>
 
