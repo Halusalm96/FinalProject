@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>회원가입</title>
     <!-- 필요한 CSS 링크 및 스타일을 여기에 추가하세요 -->
     <style>
@@ -35,7 +37,7 @@
         <label for="memberEmail">이메일:</label>
         <input type="email" class="form-control" id="memberEmail" name="memberEmail" onblur="checkEmail_fn()"
                placeholder="admin@member.com">
-        <p id="checkEmail" style="display: none"></p>
+        <p id="checkEmail" style="display: none;"></p>
 
         <label for="memberPassword">비밀번호:</label>
         <input type="password" class="form-control" name="memberPassword" id="memberPassword"
@@ -57,10 +59,12 @@
         <input type="text" class="form-control" name="memberArea" id="memberArea" placeholder="지역 입력"> <br>
 
         <label for="memberMobile">휴대폰 번호:</label>
-        <input type="text" class="form-control" name="memberMobile" id="memberMobile" placeholder="'_'제외하고 숫자만 입력"> <br>
+        <input type="text" class="form-control" name="memberMobile" id="memberMobile" onblur="checkMobile_fn()" placeholder="'_'제외하고 숫자만 입력"> <br>
+        <p id="checkMobile" style="display: none"></p>
 
         <label for="memberNickName">닉네임:</label>
-        <input type="text" class="form-control" name="memberNickName" id="memberNickName" placeholder="닉네임 입력"> <br>
+        <input type="text" class="form-control" name="memberNickName" id="memberNickName" onblur="checkNickName_fn()" placeholder="닉네임 입력"> <br>
+        <p id="checkNickName" style="display: none"></p>
 
         <div class="error-message" id="error-message"></div>
 
@@ -79,24 +83,75 @@
         if (memberEmail.length > 0) {
             $.ajax({
                 type: "post",
-                url: "/member/check",
+                url: "/member/checkEmail",
                 contentType: "application/json",
                 data: JSON.stringify({
                     memberEmail: memberEmail
                 }),
-                success: function (response) {
-                    console.log("서버 응답:", response); // 응답을 콘솔에 출력
+                success: function () {
                     checkEmail.innerHTML = "사용 가능한 이메일 입니다.";
                     checkEmail.style.display = "block";
                 },
-                error: function (xhr, status, error) {
-                    console.error("에러 발생: ", error);
+                error: function () {
                     checkEmail.innerHTML = "이미 사용중인 이메일 입니다.";
                     checkEmail.style.display = "block";
                 }
             });
         } else {
             checkEmail.style.display = "none";
+        }
+    };
+
+    const checkMobile_fn = () => {
+        const memberMobile = document.getElementById("memberMobile").value;
+        const checkMobile = document.getElementById("checkMobile");
+        if (memberMobile.length > 0) {
+            $.ajax({
+                type: "post",
+                url: "/member/checkMobile",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    memberMobile: memberMobile
+                }),
+                success: function (response) {
+                    console.log("서버 응답:", response); // 응답을 콘솔에 출력
+                    checkMobile.style.display = "none";
+                },
+                error: function (xhr, status, error) {
+                    console.error("에러 발생: ", error);
+                    checkMobile.innerHTML = "이미 가입한 전화번호 입니다.";
+                    checkMobile.style.display = "block";
+                }
+            });
+        } else {
+            checkMobile.style.display = "none";
+        }
+    };
+
+    const checkNickName_fn = () => {
+        const memberNickName = document.getElementById("memberNickName").value;
+        const checkNickName = document.getElementById("checkNickName");
+        if (memberNickName.length > 0) {
+            $.ajax({
+                type: "post",
+                url: "/member/checkNickName",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    memberNickName: memberNickName
+                }),
+                success: function (response) {
+                    console.log("서버 응답:", response); // 응답을 콘솔에 출력
+                    checkNickName.innerHTML = "사용 가능한 닉네임 입니다.";
+                    checkNickName.style.display = "block";
+                },
+                error: function (xhr, status, error) {
+                    console.error("에러 발생: ", error);
+                    checkNickName.innerHTML = "이미 사용중인 닉에임 입니다.";
+                    checkNickName.style.display = "block";
+                }
+            });
+        } else {
+            checkNickName.style.display = "none";
         }
     };
 
