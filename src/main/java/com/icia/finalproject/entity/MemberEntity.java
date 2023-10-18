@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Table(name = "member_table")
-public class MemberEntity {
+public class MemberEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,4 +48,6 @@ public class MemberEntity {
         memberEntity.setMemberFileAttached(0);
         return memberEntity;
     }
+
+
 }

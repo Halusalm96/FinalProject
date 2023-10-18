@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+  <style>
+    body {
+      background-color: #fce4ec; /* 분홍색 배경색 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: white; /* 흰색 배경색 */
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 30px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 15px;
+      background-color: #ff4081; /* 분홍색 버튼색 */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .login-form a {
+      text-decoration: none;
+      color: #333;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="login-container">
+  <h2>로그인</h2>
+  <form class="login-form" action="/member/login" method="post">
+    <input type="text" name="memberEmail" placeholder="이메일" required><br>
+    <input type="password" name="memberPassword" placeholder="비밀번호" required><br>
+    <button type="submit">로그인</button>
+  </form>
+  <div>
+    <a href="/member/save">회원가입</a>
+    <a href="/">비밀번호 찾기</a>
+  </div>
+</div>
+</body>
+
+</html>

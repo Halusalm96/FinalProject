@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,9 +67,23 @@ public class MemberController {
         if (loginResult) {
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
             session.setAttribute("loginId", memberDTO.getId());
-            return "memberPages/memberMain";
+            return "/memberPages/memberMain";
         } else {
-            return "/Home";
+            return "/memberPages/memberLogin";
         }
+    }
+
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginEmail");
+        return "/Home";
+    }
+
+    @GetMapping("/member/detail")
+    public String  memberDetail(HttpSession session, Model model) {
+        String memberEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
+        model.addAttribute("member", memberDTO);
+        return "/memberPages/memberDetail";
     }
 }
