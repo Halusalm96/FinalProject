@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -55,6 +57,18 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @PostMapping("/member/login")
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        boolean loginResult = memberService.login(memberDTO);
+        if (loginResult) {
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            session.setAttribute("loginId", memberDTO.getId());
+            return "memberPages/memberMain";
+        } else {
+            return "/Home";
         }
     }
 }
