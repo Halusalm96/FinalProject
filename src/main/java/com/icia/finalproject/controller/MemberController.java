@@ -107,4 +107,8 @@ public class MemberController {
         model.addAttribute("member",memberDTO);
         return "/memberPages/memberUpdate";
     }
+    @GetMapping("/member/password/find")
+    public String passwordFind(){
+        return "/memberPages/memberPasswordFind";
+    }
 }
