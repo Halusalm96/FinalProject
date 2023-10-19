@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <form>
+        <input type="hidden" name="memberId" th:value="${member.id}">
+        <label for="email">이메일</label>
+        <input type="text" name="memberEmail" id="email" th:value="${member.memberEmail}" readonly>
+        <label for="password">비밀번호 </label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요.">
+        <label for="area">지역</label>
+        <input type="text" name="memberArea" id="area" th:value="${member.memberArea}">
+        <label for="nickName">닉네임</label>
+        <input type="text" name="memberNickName" id="nickName" th:value="${member.memberNickName}">
+        <label for="name">이름</label>
+        <input type="text" name="memberName" id="name" th:value="${member.memberName}">
+        <label for="point">포인트</label>
+        <input type="text" name="memberPoint" id="point" th:value="${member.memberPoint}" readonly>
+        <label for="mobile">전화번호</label>
+        <input type="text" name="memberMobile" id="mobile" th:value="${member.memberMobile}">
+        <label for="birth">생년월일</label>
+        <input type="text" name="memberBirth" id="birth" th:value="${member.memberBirth}">
+        <input type="hidden" name="memberFileAttached" th:value="${member.memberFileAttached}">
+        <input type="button" value="정보 수정" onclick="update_fn()">
+    </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+<script th:inline="javascript">
+    const update_fn = () => {
+        const passDB = [[${member.memberPassword}]]
+        const password = document.querySelector('[name="password"]').value;
+        const email = document.querySelector('[name="memberEmail"]').value;
+        const area = document.querySelector('[name="memberArea"]').value;
+        const name = document.querySelector('[name="memberName"]').value;
+        const nickName = document.querySelector('[name="memberNickName"]').value;
+        const birth = document.querySelector('[name="memberBirth"]').value;
+        const point = document.querySelector('[name="memberPoint"]').value;
+        const mobile = document.querySelector('[name="memberMobile"]').value;
+        const id = document.querySelector('[name="memberId"]').value;
+        const fileAttached = document.querySelector('[name="memberFileAttached"]').value;
+        if (password == null) {
+            alert("비밀번호를 입력하세요.");
+        }else if (passDB == password) {
+            $.ajax({
+                method: "post",
+                url: "/member/update",
+                data: {
+                    id: id,
+                    memberEmail: email,
+                    memberPassword: password,
+                    memberMobile: mobile,
+                    memberArea: area,
+                    memberName: name,
+                    memberNickName: nickName,
+                    memberBirth: birth,
+                    memberPoint: point,
+                    memberFileAttached: fileAttached
+                }
+            }).then(res => {
+                alert("정보수정이 완료되었습니다. 로그인화면으로 이동합니다.");
+                location.href = "/";
+            }).catch(err => {
+                alert("정보수정에 실패하였습니다!");
+            });
+        } else {
+            alert("비밀번호가 일치하지 않습니다!");
+        }
+    }
+</script>
+</body>
+</html>

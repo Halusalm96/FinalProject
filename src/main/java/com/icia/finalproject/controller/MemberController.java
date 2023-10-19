@@ -101,4 +101,10 @@ public class MemberController {
         memberService.update(memberDTO);
         return "/Home";
     }
+    @GetMapping("/member/update/{id}")
+    public String update(@PathVariable("id") Long id, Model model){
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member",memberDTO);
+        return "/memberPages/memberUpdate";
+    }
 }

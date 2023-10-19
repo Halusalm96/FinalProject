@@ -46,6 +46,7 @@
             <td th:text="${member.createdAt}"></td>
         </tr>
     </table>
+    <button th:onclick="memberUpdate_fn([[${member.id}]])">정보 수정</button>
     <button th:onclick="memberPassword_fn([[${member.id}]])">비밀번호 변경하기</button>
     <button th:onclick="memberDelete_fn([[${member.id}]])">탈퇴하기</button>
 </div>
@@ -60,6 +61,9 @@
     }
     const memberPassword_fn = (id) => {
         location.href = `/member/password/${id}`;
+    }
+    const memberUpdate_fn = (id) => {
+        location.href = `/member/update/${id};`
     }
 </script>
 </html>
