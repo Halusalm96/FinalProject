@@ -1,4 +1,7 @@
 package com.icia.finalproject.repository;
 
-public interface BoardFileRepository {
+import com.icia.finalproject.entity.BoardFileEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardFileRepository extends JpaRepository<BoardFileEntity,Long> {
 }

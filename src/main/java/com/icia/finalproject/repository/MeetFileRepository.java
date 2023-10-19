@@ -1,4 +1,7 @@
 package com.icia.finalproject.repository;
 
-public interface MeetFileRepository {
+import com.icia.finalproject.entity.MeetFileEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MeetFileRepository extends JpaRepository<MeetFileEntity,Long> {
 }
