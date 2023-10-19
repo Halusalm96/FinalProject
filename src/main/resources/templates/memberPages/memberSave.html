@@ -33,7 +33,9 @@
 </div>
 
 <div class="form-container">
-    <form id="signup-form" action="/member/save" method="post">
+    <form id="signup-form" action="/member/save" method="post" enctype="multipart/form-data">
+        <label for="memberFile">프로필 사진:</label>
+        <input type="file" name="memberFile" id="memberFile" class="form-control" multiple>
         <label for="memberEmail">이메일:</label>
         <input type="email" class="form-control" id="memberEmail" name="memberEmail" onblur="checkEmail_fn()"
                placeholder="admin@member.com">

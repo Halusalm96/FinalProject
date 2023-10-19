@@ -10,6 +10,7 @@
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
     <form>
         <input type="hidden" name="memberId" th:value="${member.id}">
+        <input type="file" name="memberFile" class="form-control" multiple>
         <label for="email">이메일</label>
         <input type="text" name="memberEmail" id="email" th:value="${member.memberEmail}" readonly>
         <label for="password">비밀번호 </label>
