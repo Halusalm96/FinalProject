@@ -10,11 +10,6 @@
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
     <div class="container">
         <table class="table table-hover">
-
-            <!--      private String memberArea;-->
-            <!--      private String memberNickName;-->
-            <!--      private int memberPoint;-->
-
             <tr>
                 <th>이메일</th>
                 <td th:text="${member.memberEmail}"></td>
@@ -52,12 +47,21 @@
                 <td th:text="${member.createdAt}"></td>
             </tr>
         </table>
-        <!--    <button class="button" onclick="member_detail([[${member.id}]])">수정</button>-->
-        <!--    <button class="button button-danger" onclick="member_delete([[${member.id}]])">탈퇴</button>-->
+            <button th:onclick="memberPassword_fn([[${member.id}]])">비밀번호 변경하기</button>
+            <button th:onclick="memberDelete_fn([[${member.id}]])">탈퇴하기</button>
     </div>
 </div>
 
 <div th:replace="~{component/footer :: footer}"></div>
 
 </body>
+
+<script th:inline="javascript">
+    const memberDelete_fn = (id) => {
+        location.href = `/member/delete/${id}`;
+    }
+    const memberPassword_fn = (id) => {
+        location.href = `/member/password/${id}`;
+    }
+</script>
 </html>
