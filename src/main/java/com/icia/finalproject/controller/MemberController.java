@@ -89,4 +89,16 @@ public class MemberController {
         session.removeAttribute("loginEmail");
         return "/Home";
     }
+    @GetMapping("/member/password/{id}")
+    public String password(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member",memberDTO);
+        return "/memberPages/memberPassword";
+    }
+    @PostMapping("/member/update")
+    public String memberUpdate(@ModelAttribute MemberDTO memberDTO) {
+        System.out.println("memberDTO = " + memberDTO);
+        memberService.update(memberDTO);
+        return "/Home";
+    }
 }

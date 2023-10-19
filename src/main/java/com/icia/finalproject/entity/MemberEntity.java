@@ -50,4 +50,18 @@ public class MemberEntity extends BaseEntity {
     }
 
 
+    public static MemberEntity update(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberBirth(memberDTO.getMemberBirth());
+        memberEntity.setMemberArea(memberDTO.getMemberArea());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setMemberNickName(memberDTO.getMemberNickName());
+        memberEntity.setMemberPoint(memberDTO.getMemberPoint());
+        memberEntity.setMemberFileAttached(memberDTO.getMemberFileAttached());
+        return memberEntity;
+    }
 }
