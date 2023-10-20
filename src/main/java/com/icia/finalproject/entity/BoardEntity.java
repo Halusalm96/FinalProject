@@ -1,5 +1,6 @@
 package com.icia.finalproject.entity;
 
+import com.icia.finalproject.dto.BoardDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,4 +36,28 @@ public class BoardEntity extends BaseEntity{
     private MemberEntity memberEntity;
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
+
+    public static BoardEntity toSave(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardKind(boardDTO.getBoardKind());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardHits(boardDTO.getBoardHits());
+        boardEntity.setBoardPoint(boardDTO.getBoardPoint());
+        boardEntity.setBoardFileAttached(0);
+        return boardEntity;
+    }
+
+    public static BoardEntity toBoardEntityWithFIle(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardKind(boardDTO.getBoardKind());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardHits(boardDTO.getBoardHits());
+        boardEntity.setBoardPoint(boardDTO.getBoardPoint());
+        boardEntity.setBoardFileAttached(1);
+        return boardEntity;
+    }
 }

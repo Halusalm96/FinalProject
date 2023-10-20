@@ -23,10 +23,10 @@ public class MemberFileEntity {
     private MemberEntity memberEntity;
 
     public static MemberFileEntity saveMemberFile(MemberEntity savedEntity, String originalFileName, String storedFileName) {
-        MemberFileEntity boardFileEntity = new MemberFileEntity();
-        boardFileEntity.setOriginalFileName(originalFileName);
-        boardFileEntity.setStoredFileName(storedFileName);
-        boardFileEntity.setMemberEntity(savedEntity);
-        return boardFileEntity;
+        MemberFileEntity memberFileEntity = new MemberFileEntity();
+        memberFileEntity.setOriginalFileName(originalFileName);
+        memberFileEntity.setStoredFileName(storedFileName);
+        memberFileEntity.setMemberEntity(savedEntity);
+        return memberFileEntity;
     }
 }

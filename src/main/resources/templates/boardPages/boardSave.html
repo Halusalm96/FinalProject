@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+  <!-- 폼 추가 -->
+  <form action="/board/save" method="post" enctype="multipart/form-data">
+    <label for="boardTitle">제목:</label>
+    <input type="text" id="boardTitle" name="boardTitle" required><br>
+
+    <label for="boardWriter">작성자:</label>
+    <input type="text" id="boardWriter" name="boardWriter" th:value="${session.loginNickName}" readonly><br>
+
+    <label for="boardKind">종류:</label>
+    <select id="boardKind" name="boardKind" required>
+      <option value="문화/예술">문화/예술</option>
+      <option value="운동/액티비티">운동/엑티비티</option>
+      <option value="푸드/드링크">푸드/드링크</option>
+      <option value="취미">취미</option>
+      <option value="여행/동행">여행/동행</option>
+      <option value="성장/자기계발">성장/자기계발</option>
+      <option value="동네/또래">동네/또래</option>
+      <option value="연애/소개팅">연애/소개팅</option>
+      <option value="재테크">재테크</option>
+      <option value="외국어">외국어</option>
+    </select><br>
+
+    <label for="boardContents">내용:</label><br>
+    <textarea id="boardContents" name="boardContents" rows="4" cols="50" required></textarea><br>
+
+    <label for="boardPoint">포인트:</label>
+    <input type="number" id="boardPoint" name="boardPoint" required><br>
+
+    <label for="boardFile">사진 업로드:</label>
+    <input type="file" id="boardFile" name="boardFile"><br>
+
+    <button type="submit">저장</button>
+  </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+</html>

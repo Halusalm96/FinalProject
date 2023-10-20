@@ -17,7 +17,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     public List<CommentDTO> findByBoardId(Long id) {
-        List<CommentEntity> commentEntityList = commentRepository.findByBoardId(id);
+        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntityId(id);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         for (CommentEntity commentEntity : commentEntityList) {
             commentDTOList.add(CommentDTO.toCommentList(commentEntity));

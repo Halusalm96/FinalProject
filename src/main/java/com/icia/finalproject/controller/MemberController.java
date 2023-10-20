@@ -63,6 +63,7 @@ public class MemberController {
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            session.setAttribute("loginNickName",memberDTO.getMemberNickName());
             session.setAttribute("loginId", memberDTO.getId());
             return "/memberPages/memberMain";
         } else {
