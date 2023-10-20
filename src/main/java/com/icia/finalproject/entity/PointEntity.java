@@ -12,4 +12,5 @@ import javax.persistence.Table;
 @Setter(AccessLevel.PRIVATE)
 @Table(name = "point_table")
 public class PointEntity extends BaseEntity {
+
 }
