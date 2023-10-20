@@ -2,13 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{component/config :: config}"></th:block>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 
 <div class="container">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
+  <div>
+    <h2 th:text="${boardDTO.boardTitle}"></h2>
+    <p>작성자: <span th:text="${boardDTO.boardWriter}"></span></p>
+    <p>게시물 종류: <span th:text="${boardDTO.boardKind}"></span></p>
+    <p>작성일시: <span th:text="${boardDTO.createdAt}"></span></p>
+    <p>조회수: <span th:text="${boardDTO.boardHits}"></span></p>
+    <p>포인트: <span th:text="${boardDTO.boardPoint}"></span></p>
+    <p>첨부 파일 수: <span th:text="${boardDTO.boardFileAttached}"></span></p>
 
+    <!-- 게시물 내용 -->
+    <div th:text="${boardDTO.boardContents}"></div>
+
+    <!-- 첨부 파일 목록 -->
+    <ul th:if="${boardDTO.boardFile != null}">
+      <li th:each="fileName : ${boardDTO.originalFileName}">
+        <a th:href="'/download/' + ${fileName}" th:text="${fileName}"></a>
+      </li>
+    </ul>
+  </div>
+  <form th:action="@{'/board/' + ${boardDTO.id}/comment}" method="post">
+    <input type="text" name="commentText" placeholder="댓글을 입력하세요" required>
+    <button type="submit">댓글 작성</button>
+  </form>
+  <div th:if="${commentDTO != null && commentDTO.size() > 0}">
+    <h3>댓글 목록</h3>
+    <ul>
+      <li th:each="comment : ${commentDTO}">
+        <span th:text="${comment.commentWriter}"></span>
+      </li>
+    </ul>
+  </div>
+  <div th:unless="${commentDTO != null && commentDTO.size() > 0}">
+    <p>댓글이 없습니다.</p>
+  </div>
 </div>
 
 <div th:replace="~{component/footer :: footer}"></div>
