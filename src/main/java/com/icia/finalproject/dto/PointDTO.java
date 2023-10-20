@@ -9,4 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class PointDTO {
+    private Long id;
 }

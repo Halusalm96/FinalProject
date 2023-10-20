@@ -43,9 +43,9 @@ public class MemberDTO {
         memberDTO.setMemberMobile(memberEntity.getMemberMobile());
         memberDTO.setCreatedAt((UtilClass.dateTimeFormat(memberEntity.getCreatedAt())));
         if (memberEntity.getMemberFileAttached()==1){
-            for(MemberFileEntity boardFileEntity : memberEntity.getMemberFileEntityList()) {
-                memberDTO.getOriginalFileName().add(boardFileEntity.getOriginalFileName());
-                memberDTO.getStoredFileName().add(boardFileEntity.getStoredFileName());
+            for(MemberFileEntity memberFileEntity : memberEntity.getMemberFileEntityList()) {
+                memberDTO.getOriginalFileName().add(memberFileEntity.getOriginalFileName());
+                memberDTO.getStoredFileName().add(memberFileEntity.getStoredFileName());
             }
             memberDTO.setMemberFileAttached(1);
         }else{

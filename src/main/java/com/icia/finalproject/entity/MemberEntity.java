@@ -36,7 +36,7 @@ public class MemberEntity extends BaseEntity {
     private int memberFileAttached;
     @Column(length = 30)
     private String memberBirth;
-    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<MemberFileEntity> memberFileEntityList = new ArrayList<>();
 
     public static MemberEntity save(MemberDTO memberDTO) {

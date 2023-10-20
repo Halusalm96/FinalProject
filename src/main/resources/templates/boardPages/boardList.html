@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+  <!-- 화면에 보여질 내용이 들어갈 부분 -->
+  <h1>게시물 목록</h1>
+  <div th:if="${not #lists.isEmpty(boardList)}">
+    <table>
+      <thead>
+      <tr>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>이미지</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="boardDTO : ${boardList}">
+        <td>
+          <a th:href="@{'/board/' + ${boardDTO.id}}" th:text="${boardDTO.boardTitle}"></a>
+        </td>
+        <td th:text="${boardDTO.boardWriter}"></td>
+        <td>
+          <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="thumbnail" alt="이미지">
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${#lists.isEmpty(boardList)}">
+    <p>게시물이 없습니다.</p>
+  </div>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+</html>
