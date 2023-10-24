@@ -60,11 +60,11 @@ public class MemberController {
 
     @PostMapping("/member/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        boolean loginResult = memberService.login(memberDTO);
-        if (loginResult) {
-            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-            session.setAttribute("loginNickName",memberDTO.getMemberNickName());
-            session.setAttribute("loginId", memberDTO.getId());
+        MemberDTO loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
+            session.setAttribute("loginEmail", loginResult.getMemberEmail());
+            session.setAttribute("loginNickName",loginResult.getMemberNickName());
+            session.setAttribute("loginId", loginResult.getId());
             return "/memberPages/memberMain";
         } else {
             return "/memberPages/memberLogin";

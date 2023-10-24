@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,12 +29,22 @@ public class BoardController {
         return "/boardPages/boardList";
     }
     @GetMapping("/board/{id}")
-    public String findById(@PathVariable("id") Long id, Model model) {
-        BoardDTO boardDTO = boardService.findById(id);
-        List<CommentDTO> commentDTOList = commentService.findByBoardId(id);
-        model.addAttribute("boardDTO", boardDTO);
-        model.addAttribute("commentDTO",commentDTOList);
-        return "/boardPages/boardDetail";
+    public String findById(@PathVariable("id") Long id, Model model, HttpSession session) {
+        boardService.increaseHits(id);
+        Long memberId = (Long) session.getAttribute("loginId");
+        try {
+            BoardDTO boardDTO = boardService.findById(id);
+            model.addAttribute("boardDTO", boardDTO);
+            List<CommentDTO> commentDTOList = commentService.findAll(memberId, id);
+            if (commentDTOList.size() > 0) {
+                model.addAttribute("commentDTO", commentDTOList);
+            } else {
+                model.addAttribute("commentDTO", null);
+            }
+            return "boardPages/boardDetail";
+        } catch (NoSuchElementException e) {
+            return "boardPages/boardNotFound";
+        }
     }
     @GetMapping("/board/save")
     public String boardSave(){

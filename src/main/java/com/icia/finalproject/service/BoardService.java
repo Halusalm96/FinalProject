@@ -6,7 +6,9 @@ import com.icia.finalproject.entity.BoardFileEntity;
 import com.icia.finalproject.repository.BoardFileRepository;
 import com.icia.finalproject.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,8 +22,10 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+//    @Autowired
     private final BoardFileRepository boardFileRepository;
 
+    @Transactional
     public List<BoardDTO> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDTO> boardDTOList = new ArrayList<>();
@@ -31,6 +35,7 @@ public class BoardService {
         return boardDTOList;
     }
 
+    @Transactional
     public BoardDTO findById(Long id) {
         Optional<BoardEntity> boardEntityById = boardRepository.findById(id);
         if(boardEntityById.isPresent()) {
@@ -41,6 +46,7 @@ public class BoardService {
         }
     }
 
+    @Transactional
     public void save(BoardDTO boardDTO) throws IOException {
         if(boardDTO.getBoardFile().get(0).isEmpty()) {
             BoardEntity boardEntity = BoardEntity.toSave(boardDTO);
@@ -57,5 +63,10 @@ public class BoardService {
                 boardFileRepository.save(boardFileEntity);
             }
         }
+    }
+
+    @Transactional
+    public void increaseHits(Long id) {
+        boardRepository.increaseHits(id);
     }
 }
