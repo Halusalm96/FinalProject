@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container mt-5 mb-5">
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <form action="/meet/update" method="post">
+        작성자: <input type="text" name="meetWriter" class="form-control" th:value="${meet.meetWriter}" placeholder="작성자" readonly>
+        제목: <input type="text" name="meetTitle" class="form-control" th:value="${meet.meetTitle}" placeholder="제목">
+        내용: <textarea id="board-contents" name="meetContents" cols="30" rows="10" class="form-control" th:text="${meet.meetContents}" placeholder="내용을 입력하세요"></textarea>
+        <input type="hidden" name="id" th:value="${meet.id}">
+        <input type="hidden" name="meetHits" th:value="${meet.meetHits}">
+        종류 : <select id="meetKind" name="meetKind" th:value="${meet.meetKind}" required>
+            <option value="문화/예술">문화/예술</option>
+            <option value="운동/액티비티">운동/엑티비티</option>
+            <option value="푸드/드링크">푸드/드링크</option>
+            <option value="취미">취미</option>
+            <option value="여행/동행">여행/동행</option>
+            <option value="성장/자기계발">성장/자기계발</option>
+            <option value="동네/또래">동네/또래</option>
+            <option value="연애/소개팅">연애/소개팅</option>
+            <option value="재테크">재테크</option>
+            <option value="외국어">외국어</option>
+        </select>
+        <input type="number" name="meetPoint" class="form-control" th:value="${meet.meetPoint}">
+        <input type="number" name="meetNumber" class="form-control" th:value="${meet.meetNumber}">
+        <input type="text" name="meetMap" class="form-control" th:value="${meet.meetMap}">
+        <input type="button" value="수정" onclick="meet_update()" class="btn btn-primary">
+    </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+<script th:inline="javascript">
+    const meet_update = () => {
+        const id = document.querySelector('[name="id"]').value;
+        const meetWriter = document.querySelector('[name="meetWriter"]').value;
+        const meetTitle = document.querySelector('[name="meetTitle"]').value;
+        const meetKind = document.querySelector('[name="meetKind"]').value;
+        const meetPoint = document.querySelector('[name="meetPoint"]').value;
+        const meetContents = document.querySelector('[name="meetContents"]').value;
+        const meetHits = document.querySelector('[name="meetHits"]').value;
+        const meetNumber = document.querySelector('[name="meetNumber"]').value;
+        const meetMap = document.querySelector('[name="meetMap"]').value;
+        axios({
+            method: "put",
+            url: `/meet/${id}`,
+            data: {
+                id : id,
+                meetTitle : meetTitle,
+                meetWriter : meetWriter,
+                meetContents : meetContents,
+                meetHits : meetHits,
+                meetKind : meetKind,
+                meetPoint : meetPoint,
+                meetMap : meetMap,
+                meetNumber : meetNumber
+            }
+        }).then(res => {
+            location.href = `/meet/${id}`;
+        }).catch(err => {
+            alert("수정 실패!");
+        });
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

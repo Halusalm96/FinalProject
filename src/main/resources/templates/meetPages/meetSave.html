@@ -11,10 +11,8 @@
   <form action="/meet/save" method="post" enctype="multipart/form-data">
     <label for="meetTitle">제목:</label>
     <input type="text" id="meetTitle" name="meetTitle" required><br>
-
     <label for="meetWriter">작성자:</label>
     <input type="text" id="meetWriter" name="meetWriter" th:value="${session.loginNickName}" readonly><br>
-
     <label for="meetKind">종류:</label>
     <select id="meetKind" name="meetKind" required>
       <option value="문화/예술">문화/예술</option>
@@ -28,22 +26,16 @@
       <option value="재테크">재테크</option>
       <option value="외국어">외국어</option>
     </select><br>
-
     <label for="meetContents">내용:</label><br>
     <textarea id="meetContents" name="meetContents" rows="4" cols="50" required></textarea><br>
-
     <label for="meetPoint">포인트:</label>
     <input type="number" id="meetPoint" name="meetPoint" required><br>
-
     <label for="meetFile">사진 업로드:</label>
     <input type="file" id="meetFile" name="meetFile"><br>
-
     <label for="meetNumber">제한 인원:</label>
     <input type="number" id="meetNumber" name="meetNumber"><br>
-
     <label for="meetMap">위치:</label>
     <input type="text" id="meetMap" name="meetMap"><br>
-
     <button type="submit">저장</button>
   </form>
 </div>

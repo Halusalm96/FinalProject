@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <div>
+        <h2 th:text="${meetDTO.meetTitle}"></h2>
+        <p style="display: none"><span th:value="${meetDTO.id}"></span></p>
+        <p>작성자: <span th:text="${meetDTO.meetWriter}"></span></p>
+        <p>게시물 종류: <span th:text="${meetDTO.meetKind}"></span></p>
+        <p>작성일시: <span th:text="${meetDTO.createdAt}"></span></p>
+        <p>조회수: <span th:text="${meetDTO.meetHits}"></span></p>
+        <p>포인트: <span th:text="${meetDTO.meetPoint}"></span></p>
+        <p>첨부 파일 수: <span th:text="${meetDTO.meetFileAttached}"></span></p>
+
+        <!-- 게시물 내용 -->
+        <div th:text="${meetDTO.meetContents}"></div>
+
+        <!-- 첨부 파일 목록 -->
+        <ul th:if="${meetDTO.meetFile != null}">
+            <li th:each="fileName : ${meetDTO.originalFileName}">
+                <a th:href="'/download/' + ${fileName}" th:text="${fileName}"></a>
+            </li>
+        </ul>
+    </div>
+    <div id="btn-area">
+        <button class="btn btn-primary" onclick="list_fn()">목록</button>
+        <button th:if="${session.loginNickName == meetDTO.meetWriter}" class="btn btn-warning" onclick="update_req()">
+            수정
+        </button>
+        <button th:if="${session.loginNickName == meetDTO.meetWriter} or ${'admin' == session.loginEmail}"
+                class="btn btn-danger" onclick="delete_req()">삭제
+        </button>
+    </div>
+    <div id="pass-check" class="mt-3">
+
+    </div>
+
+    <div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+<script th:inline="javascript">
+    const update_req = () => {
+        const id = [[${meetDTO.id}]];
+        location.href = `/meet/update/${id}`;
+    }
+
+    const delete_req = () => {
+        const id = [[${meetDTO.id}]];
+        location.href = `/meet/delete/${id}`;
+    }
+    const list_fn = () => {
+        location.href = `/meet/list`;
+    }
+</script>
+</html>

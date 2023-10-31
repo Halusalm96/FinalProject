@@ -1,10 +1,8 @@
 package com.icia.finalproject.service;
 
+import com.icia.finalproject.dto.BoardDTO;
 import com.icia.finalproject.dto.MeetDTO;
-import com.icia.finalproject.entity.BoardEntity;
-import com.icia.finalproject.entity.BoardFileEntity;
-import com.icia.finalproject.entity.MeetEntity;
-import com.icia.finalproject.entity.MeetFileEntity;
+import com.icia.finalproject.entity.*;
 import com.icia.finalproject.repository.MeetFileRepository;
 import com.icia.finalproject.repository.MeetRepository;
 import com.icia.finalproject.repository.MemberRepository;
@@ -17,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +51,31 @@ public class MeetService {
                 meetFileRepository.save(meetFileEntity);
             }
         }
+    }
+
+    @Transactional
+    public void increaseHits(Long id) {
+        meetRepository.increaseHits(id);
+    }
+
+    @Transactional
+    public MeetDTO findById(Long id) {
+        Optional<MeetEntity> meetEntityById = meetRepository.findById(id);
+        if(meetEntityById.isPresent()) {
+            MeetEntity meetEntity = meetEntityById.get();
+            return MeetDTO.toMeetList(meetEntity);
+        }else {
+            return null;
+        }
+    }
+
+    public void delete(Long id) {
+        meetRepository.deleteById(id);
+    }
+
+    public void update(MeetDTO meetDTO) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(meetDTO.getMeetWriter()).orElseThrow(() -> new NoSuchElementException());
+        MeetEntity meetEntity = MeetEntity.toUpdateEntity(memberEntity, meetDTO);
+        meetRepository.save(meetEntity);
     }
 }

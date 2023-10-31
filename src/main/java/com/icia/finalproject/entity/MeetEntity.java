@@ -68,4 +68,20 @@ public class MeetEntity extends BaseEntity{
         meetEntity.setMeetFileAttached(1);
         return meetEntity;
     }
+
+    public static MeetEntity toUpdateEntity(MemberEntity memberEntity, MeetDTO meetDTO) {
+        MeetEntity meetEntity = new MeetEntity();
+        meetEntity.setMemberEntity(memberEntity);
+        meetEntity.setId(meetDTO.getId());
+        meetEntity.setMeetWriter(meetDTO.getMeetWriter());
+        meetEntity.setMeetTitle(meetDTO.getMeetTitle());
+        meetEntity.setMeetContents(meetDTO.getMeetContents());
+        meetEntity.setMeetHits(meetDTO.getMeetHits());
+        meetEntity.setMeetKind(meetDTO.getMeetKind());
+        meetEntity.setMeetMap(meetDTO.getMeetMap());
+        meetEntity.setMeetNumber(meetDTO.getMeetNumber());
+        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
+        meetEntity.setMeetFileAttached(1);
+        return meetEntity;
+    }
 }
