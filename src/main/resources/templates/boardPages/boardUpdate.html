@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container mt-5 mb-5">
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <form action="/board/update" method="post">
+        작성자: <input type="text" name="boardWriter" class="form-control" th:value="${board.boardWriter}" placeholder="작성자" readonly>
+        제목: <input type="text" name="boardTitle" class="form-control" th:value="${board.boardTitle}" placeholder="제목">
+        내용: <textarea id="board-contents" name="boardContents" cols="30" rows="10" class="form-control" th:text="${board.boardContents}" placeholder="내용을 입력하세요"></textarea>
+        <input type="hidden" name="id" th:value="${board.id}">
+        <input type="hidden" name="boardHits" th:value="${board.boardHits}">
+        종류 : <select id="boardKind" name="boardKind" th:value="${board.boardKind}" required>
+            <option value="문화/예술">문화/예술</option>
+            <option value="운동/액티비티">운동/엑티비티</option>
+            <option value="푸드/드링크">푸드/드링크</option>
+            <option value="취미">취미</option>
+            <option value="여행/동행">여행/동행</option>
+            <option value="성장/자기계발">성장/자기계발</option>
+            <option value="동네/또래">동네/또래</option>
+            <option value="연애/소개팅">연애/소개팅</option>
+            <option value="재테크">재테크</option>
+            <option value="외국어">외국어</option>
+        </select>
+        <input type="number" name="boardPoint" class="form-control" th:value="${board.boardPoint}">
+        <input type="button" value="수정" onclick="board_update()" class="btn btn-primary">
+    </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+<script th:inline="javascript">
+    const board_update = () => {
+        const id = document.querySelector('[name="id"]').value;
+        const boardWriter = document.querySelector('[name="boardWriter"]').value;
+        const boardTitle = document.querySelector('[name="boardTitle"]').value;
+        const boardKind = document.querySelector('[name="boardKind"]').value;
+        const boardPoint = document.querySelector('[name="boardPoint"]').value;
+        const boardContents = document.querySelector('[name="boardContents"]').value;
+        const boardHits = document.querySelector('[name="boardHits"]').value;
+        axios({
+            method: "put",
+            url: `/board/${id}`,
+            data: {
+                id : id,
+                boardTitle : boardTitle,
+                boardWriter : boardWriter,
+                boardContents : boardContents,
+                boardHits : boardHits,
+                boardKind : boardKind,
+                boardPoint : boardPoint
+            }
+        }).then(res => {
+            location.href = `/board/${id}`;
+        }).catch(err => {
+            alert("수정 실패!");
+        });
+
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

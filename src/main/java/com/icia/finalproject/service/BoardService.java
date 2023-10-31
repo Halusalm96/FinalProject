@@ -3,8 +3,10 @@ package com.icia.finalproject.service;
 import com.icia.finalproject.dto.BoardDTO;
 import com.icia.finalproject.entity.BoardEntity;
 import com.icia.finalproject.entity.BoardFileEntity;
+import com.icia.finalproject.entity.MemberEntity;
 import com.icia.finalproject.repository.BoardFileRepository;
 import com.icia.finalproject.repository.BoardRepository;
+import com.icia.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -24,6 +27,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
 //    @Autowired
     private final BoardFileRepository boardFileRepository;
+
+    private final MemberRepository memberRepository;
 
     @Transactional
     public List<BoardDTO> findAll() {
@@ -68,5 +73,14 @@ public class BoardService {
     @Transactional
     public void increaseHits(Long id) {
         boardRepository.increaseHits(id);
+    }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
+    public void update(BoardDTO boardDTO) {
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(boardDTO.getBoardWriter()).orElseThrow(() -> new NoSuchElementException());
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(memberEntity, boardDTO);
+        boardRepository.save(boardEntity);
     }
 }

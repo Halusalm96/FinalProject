@@ -5,12 +5,11 @@ import com.icia.finalproject.dto.CommentDTO;
 import com.icia.finalproject.service.BoardService;
 import com.icia.finalproject.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -41,9 +40,9 @@ public class BoardController {
             } else {
                 model.addAttribute("commentDTO", null);
             }
-            return "boardPages/boardDetail";
+            return "/boardPages/boardDetail";
         } catch (NoSuchElementException e) {
-            return "boardPages/boardNotFound";
+            return "/boardPages/boardNotFound";
         }
     }
     @GetMapping("/board/save")
@@ -54,5 +53,21 @@ public class BoardController {
     public String save(@ModelAttribute BoardDTO boardDTO) throws Exception {
         boardService.save(boardDTO);
         return "redirect:/board/list";
+    }
+    @GetMapping("/board/update/{id}")
+    public String update(@PathVariable("id") Long id, Model model) {
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "/boardPages/boardUpdate";
+    }
+    @GetMapping("/board/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        boardService.delete(id);
+        return "redirect:/board/list";
+    }
+    @PutMapping("/board/{id}")
+    public ResponseEntity update(@RequestBody BoardDTO boardDTO) {
+        boardService.update(boardDTO);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -29,7 +29,7 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/like")
+    @PostMapping("/comment/like")
     public ResponseEntity like(@RequestBody LikeDTO likeDTO) {
         boolean checkResult = commentService.likeCheck(likeDTO);
         if (checkResult)
@@ -38,7 +38,7 @@ public class CommentController {
         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
     }
 
-    @PostMapping("/unlike")
+    @PostMapping("/comment/unlike")
     public ResponseEntity unLike(@RequestBody LikeDTO likeDTO) {
         commentService.unLike(likeDTO);
         List<CommentDTO> commentDTOList = commentService.findAll(likeDTO.getMemberId(), likeDTO.getBoardId());
