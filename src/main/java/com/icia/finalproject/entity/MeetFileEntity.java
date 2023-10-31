@@ -21,4 +21,11 @@ public class MeetFileEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meet_id", referencedColumnName = "id")
     private MeetEntity meetEntity;
+    public static MeetFileEntity toSaveMeetFile(MeetEntity saveEntity, String originalFilename, String storedFileName) {
+        MeetFileEntity meetFileEntity = new MeetFileEntity();
+        meetFileEntity.setOriginalFileName(originalFilename);
+        meetFileEntity.setStoredFileName(storedFileName);
+        meetFileEntity.setMeetEntity(saveEntity);
+        return meetFileEntity;
+    }
 }

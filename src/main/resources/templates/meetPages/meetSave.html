@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+  <!-- 폼 추가 -->
+  <form action="/meet/save" method="post" enctype="multipart/form-data">
+    <label for="meetTitle">제목:</label>
+    <input type="text" id="meetTitle" name="meetTitle" required><br>
+
+    <label for="meetWriter">작성자:</label>
+    <input type="text" id="meetWriter" name="meetWriter" th:value="${session.loginNickName}" readonly><br>
+
+    <label for="meetKind">종류:</label>
+    <select id="meetKind" name="meetKind" required>
+      <option value="문화/예술">문화/예술</option>
+      <option value="운동/액티비티">운동/엑티비티</option>
+      <option value="푸드/드링크">푸드/드링크</option>
+      <option value="취미">취미</option>
+      <option value="여행/동행">여행/동행</option>
+      <option value="성장/자기계발">성장/자기계발</option>
+      <option value="동네/또래">동네/또래</option>
+      <option value="연애/소개팅">연애/소개팅</option>
+      <option value="재테크">재테크</option>
+      <option value="외국어">외국어</option>
+    </select><br>
+
+    <label for="meetContents">내용:</label><br>
+    <textarea id="meetContents" name="meetContents" rows="4" cols="50" required></textarea><br>
+
+    <label for="meetPoint">포인트:</label>
+    <input type="number" id="meetPoint" name="meetPoint" required><br>
+
+    <label for="meetFile">사진 업로드:</label>
+    <input type="file" id="meetFile" name="meetFile"><br>
+
+    <label for="meetNumber">제한 인원:</label>
+    <input type="number" id="meetNumber" name="meetNumber"><br>
+
+    <label for="meetMap">위치:</label>
+    <input type="text" id="meetMap" name="meetMap"><br>
+
+    <button type="submit">저장</button>
+  </form>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+
+</body>
+</html>

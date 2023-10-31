@@ -1,5 +1,6 @@
 package com.icia.finalproject.entity;
 
+import com.icia.finalproject.dto.MeetDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,4 +40,32 @@ public class MeetEntity extends BaseEntity{
     private MemberEntity memberEntity;
     @OneToMany(mappedBy = "meetEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MeetFileEntity> meetFileEntityList = new ArrayList<>();
+
+    public static MeetEntity toSave(MeetDTO meetDTO) {
+        MeetEntity meetEntity = new MeetEntity();
+        meetEntity.setMeetWriter(meetDTO.getMeetWriter());
+        meetEntity.setMeetTitle(meetDTO.getMeetTitle());
+        meetEntity.setMeetContents(meetDTO.getMeetContents());
+        meetEntity.setMeetHits(meetDTO.getMeetHits());
+        meetEntity.setMeetKind(meetDTO.getMeetKind());
+        meetEntity.setMeetMap(meetDTO.getMeetMap());
+        meetEntity.setMeetNumber(meetDTO.getMeetNumber());
+        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
+        meetEntity.setMeetFileAttached(0);
+        return meetEntity;
+    }
+
+    public static MeetEntity toMeetEntityWithFIle(MeetDTO meetDTO) {
+        MeetEntity meetEntity = new MeetEntity();
+        meetEntity.setMeetWriter(meetDTO.getMeetWriter());
+        meetEntity.setMeetTitle(meetDTO.getMeetTitle());
+        meetEntity.setMeetContents(meetDTO.getMeetContents());
+        meetEntity.setMeetHits(meetDTO.getMeetHits());
+        meetEntity.setMeetKind(meetDTO.getMeetKind());
+        meetEntity.setMeetMap(meetDTO.getMeetMap());
+        meetEntity.setMeetNumber(meetDTO.getMeetNumber());
+        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
+        meetEntity.setMeetFileAttached(1);
+        return meetEntity;
+    }
 }
