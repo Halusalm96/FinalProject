@@ -2,6 +2,7 @@ package com.icia.finalproject.dto;
 
 import com.icia.finalproject.entity.BoardEntity;
 import com.icia.finalproject.entity.BoardFileEntity;
+import com.icia.finalproject.entity.LikeEntity;
 import com.icia.finalproject.entity.MemberFileEntity;
 import com.icia.finalproject.util.UtilClass;
 import lombok.*;
@@ -28,8 +29,10 @@ public class BoardDTO {
     private String createdAt;
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
+    private int isLike = 0;
+    private int likeCount;
 
-    public static BoardDTO toBoardList(BoardEntity boardEntity) {
+    public static BoardDTO toBoardList(BoardEntity boardEntity, List<LikeEntity> likeEntityList) {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
@@ -37,14 +40,20 @@ public class BoardDTO {
         boardDTO.setBoardContents(boardEntity.getBoardContents());
         boardDTO.setBoardWriter(boardEntity.getBoardWriter());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
-         boardDTO.setCreatedAt((UtilClass.dateTimeFormat(boardEntity.getCreatedAt())));
-        if (boardEntity.getBoardFileAttached()==1){
-            for(BoardFileEntity boardFileEntity : boardEntity.getBoardFileEntityList()) {
+        boardDTO.setCreatedAt((UtilClass.dateTimeFormat(boardEntity.getCreatedAt())));
+        boardDTO.setLikeCount(boardEntity.getLikeEntityList().size());
+        for (LikeEntity likeEntity : likeEntityList) {
+            if (likeEntity.getBoardEntity().getId().equals(boardEntity.getId())) {
+                boardDTO.setIsLike(1);
+            }
+        }
+        if (boardEntity.getBoardFileAttached() == 1) {
+            for (BoardFileEntity boardFileEntity : boardEntity.getBoardFileEntityList()) {
                 boardDTO.getOriginalFileName().add(boardFileEntity.getOriginalFileName());
                 boardDTO.getStoredFileName().add(boardFileEntity.getStoredFileName());
             }
             boardDTO.setBoardFileAttached(1);
-        }else{
+        } else {
             boardDTO.setBoardFileAttached(0);
         }
         return boardDTO;

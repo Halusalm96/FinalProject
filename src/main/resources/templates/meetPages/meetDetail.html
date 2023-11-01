@@ -66,10 +66,10 @@
         <button th:if="${session.loginNickName == meetDTO.meetWriter}" class="btn btn-warning" onclick="update_req()">
             수정
         </button>
-        <button th:if="${session.loginNickName == meetDTO.meetWriter} or ${'admin' == session.loginEmail}" id="delete"
+        <button th:if="${session.loginNickName == meetDTO.meetWriter} or ${'admin@icia.com' == session.loginEmail}" id="delete"
                 class="btn btn-danger">삭제
         </button>
-        <button th:if="${session.loginNickName != meetDTO.meetWriter} or ${'admin' == session.loginEmail}"
+        <button th:if="${session.loginNickName != meetDTO.meetWriter} or ${'admin@icia.com' == session.loginEmail}"
                 id="application"
                 class="btn btn-danger">참여 신청
         </button>

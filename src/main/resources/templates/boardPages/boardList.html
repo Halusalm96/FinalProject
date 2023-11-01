@@ -28,6 +28,12 @@
                     <td>
                         <!--            <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="img-thumbnail" alt="이미지">-->
                     </td>
+                    <td><i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart"
+                           th:onclick="like_fn()"></i>
+                        <i th:unless="${boardDTO.isLike == 0}" class="bi bi-suit-heart-fill"
+                           th:onclick="unlike_fn()"></i>
+                        <span class="ms-1" th:text="${boardDTO.likeCount}"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -39,4 +45,39 @@
     </div>
     <div th:replace="~{component/footer :: footer}"></div>
 </body>
+<script th:inline="javascript">
+    const unlike_fn = () => {
+        const memberId = [[${session.loginId}]];
+        const boardId = [[${boardDTO.id}]];
+        axios({
+            method: "post",
+            url: "/board/unlike",
+            data: {
+                memberId: memberId,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res.data: ", res.data);
+        }).catch(err => {
+            console.log("unlike 실패");
+        });
+    }
+
+    const like_fn = () => {
+        const memberId = [[${session.loginId}]];
+        const boardId = [[${boardDTO.id}]];
+        axios({
+            method: "post",
+            url: "/board/like",
+            data: {
+                memberId: memberId,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res.data: ", res.data);
+        }).catch(err => {
+            console.log("unlike 실패");
+        });
+    }
+</script>
 </html>

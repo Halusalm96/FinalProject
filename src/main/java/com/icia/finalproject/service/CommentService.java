@@ -28,7 +28,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
-    private final LikeRepository likeRepository;
 
     public Long save(CommentDTO commentDTO) throws IOException {
         MemberEntity memberEntity = memberRepository.findByMemberEmail(commentDTO.getCommentWriter()).orElseThrow(() -> new NoSuchElementException());
@@ -38,43 +37,12 @@ public class CommentService {
     }
 
     @Transactional
-    public List<CommentDTO> findAll(Long memberId, Long boardId) {
-        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
-        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntityOrderByIdDesc(boardEntity);
-        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
-        List<LikeEntity> likeEntityList = likeRepository.findByMemberEntityAndBoardEntity(memberEntity, boardEntity);
+    public List<CommentDTO> findAll(Long boardId) {
+        List<CommentEntity> commentEntityList = commentRepository.findAll();
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        commentEntityList.forEach(comment -> {
-            commentDTOList.add(CommentDTO.toCommentList(comment, likeEntityList));
-        });
-        return commentDTOList;
-    }
-    // 좋아요 여부 체크
-    public boolean likeCheck(LikeDTO likeDTO) {
-        MemberEntity memberEntity = memberRepository.findById(likeDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
-        CommentEntity commentEntity = commentRepository.findById(likeDTO.getCommentId()).orElseThrow(() -> new NoSuchElementException());
-        Optional<LikeEntity> optionalLikeEntity = likeRepository.findByMemberEntityAndCommentEntity(memberEntity, commentEntity);
-        if (optionalLikeEntity.isEmpty()) {
-            return true;
-        } else {
-            return false;
+        for (CommentEntity commentEntity : commentEntityList) {
+            commentDTOList.add(CommentDTO.toCommentList(commentEntity));
         }
-    }
-
-    // 좋아요 처리
-    public Long like(LikeDTO likeDTO) {
-        MemberEntity memberEntity = memberRepository.findById(likeDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
-        BoardEntity boardEntity = boardRepository.findById(likeDTO.getBoardId()).orElseThrow(() -> new NoSuchElementException());
-        CommentEntity commentEntity = commentRepository.findById(likeDTO.getCommentId()).orElseThrow(() -> new NoSuchElementException());
-        LikeEntity likeEntity = LikeEntity.toLikeEntity(memberEntity, boardEntity, commentEntity);
-        return likeRepository.save(likeEntity).getId();
-    }
-
-    // 좋아요 취소 처리
-    @Transactional
-    public void unLike(LikeDTO likeDTO) {
-        MemberEntity memberEntity = memberRepository.findById(likeDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
-        CommentEntity commentEntity = commentRepository.findById(likeDTO.getCommentId()).orElseThrow(() -> new NoSuchElementException());
-        likeRepository.deleteByMemberEntityAndCommentEntity(memberEntity, commentEntity);
+        return commentDTOList;
     }
 }

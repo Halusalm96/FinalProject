@@ -21,21 +21,13 @@ public class CommentDTO {
     private Long boardId;
     private String createdAt;
     private String updatedAt;
-    private int isLike = 0;
-    private int likeCount;
 
-    public static CommentDTO toCommentList(CommentEntity commentEntity, List<LikeEntity> likeEntityList) {
+    public static CommentDTO toCommentList(CommentEntity commentEntity) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(commentEntity.getId());
         commentDTO.setCommentWriter(commentEntity.getCommentWriter());
         commentDTO.setCommentContents(commentEntity.getCommentContents());
         commentDTO.setCreatedAt((UtilClass.dateTimeFormat(commentEntity.getCreatedAt())));
-        commentDTO.setLikeCount(commentEntity.getLikeEntityList().size());
-        for (LikeEntity likeEntity: likeEntityList) {
-            if (likeEntity.getCommentEntity().getId().equals(commentEntity.getId())) {
-                commentDTO.setIsLike(1);
-            }
-        }
         return commentDTO;
     }
 }

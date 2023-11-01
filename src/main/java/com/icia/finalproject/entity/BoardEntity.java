@@ -34,6 +34,8 @@ public class BoardEntity extends BaseEntity{
     private MemberEntity memberEntity;
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LikeEntity> likeEntityList = new ArrayList<>();
 
     public static BoardEntity toSave(MemberEntity memberEntity,BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();

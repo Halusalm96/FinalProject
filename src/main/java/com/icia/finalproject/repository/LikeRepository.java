@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
-    Optional<LikeEntity> findByMemberEntityAndCommentEntity(MemberEntity memberEntity, CommentEntity commentEntity);
+//    Optional<LikeEntity> findByMemberEntityAndCommentEntity(MemberEntity memberEntity, CommentEntity commentEntity);
 
     List<LikeEntity> findByMemberEntityAndBoardEntity(MemberEntity memberEntity, BoardEntity boardEntity);
 
-    void deleteByMemberEntityAndCommentEntity(MemberEntity memberEntity, CommentEntity commentEntity);
+
+    List<LikeEntity> findByMemberEntity(MemberEntity memberEntity);
+
+    void deleteByMemberEntityAndBoardEntity(MemberEntity memberEntity, BoardEntity boardEntity);
 }

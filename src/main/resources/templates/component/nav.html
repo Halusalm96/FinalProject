@@ -2,63 +2,77 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <div class="nav-container" th:fragment="nav">
-  <style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div class="nav-container" th:fragment="nav">
+        <style>
 
-    #nav {
-      background-color: #FFFFFF;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+            #nav {
+                background-color: #FFFFFF;
+                padding: 20px 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-    .navbar {
-      display: flex;
-      flex-direction: row;
-    }
+            .navbar {
+                display: flex;
+                flex-direction: row;
+            }
 
-    .nav-link,
-    .btn {
-      font-size: 20px;
-      font-weight: normal;
-      color: #FF69B4;
-      margin: 10px 20px 10px 10px; /* 모임과 마이페이지 간격을 늘린 부분입니다 */
-      text-decoration: none;
-      cursor: pointer;
-    }
+            .nav-link,
+            .btn {
+                font-size: 20px;
+                font-weight: normal;
+                color: #FF69B4;
+                margin: 10px 20px 10px 10px; /* 모임과 마이페이지 간격을 늘린 부분입니다 */
+                text-decoration: none;
+                cursor: pointer;
+            }
 
-    .nav-link:hover,
-    .btn:hover {
-      text-decoration: none;
-    }
+            .nav-link:hover,
+            .btn:hover {
+                text-decoration: none;
+            }
 
-    .nav-link:last-child,
-    .btn:last-child {
-      margin-right: 0;
-    }
+            .nav-link:last-child,
+            .btn:last-child {
+                margin-right: 0;
+            }
 
-    .nav-link.home {
-      font-size: 40px;
-      font-weight: bold;
-    }
-  </style>
-</head>
+            .nav-link.home {
+                font-size: 40px;
+                font-weight: bold;
+            }
+        </style>
+        </head>
 <body>
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <div class="navbar-nav">
-      <a class="nav-link home" href="#">친목친목</a>
-      <a class="nav-link" href="/board/list">게시판</a>
-      <a class="nav-link" href="/meet/list">모임</a>
-      <a class="btn" href="/member/detail">마이페이지</a>
-      <a class="btn" href="/member/logout">로그아웃</a>
+    <div class="container-fluid">
+        <div class="navbar-nav">
+            <a class="nav-link home" href="#">친목친목</a>
+            <a class="nav-link" href="/board/list">게시판</a>
+            <a class="nav-link" href="/meet/list">모임</a>
+        </div>
+        <div class="navbar-nav">
+            <div class="btn" id="login-area"></div>
+            <a class="btn" href="/member/logout">로그아웃</a>
+        </div>
     </div>
-  </div>
 </nav>
+<script th:inline="javascript">
+    const loginArea = document.getElementById("login-area");
+    const loginEmail = [[${session.loginEmail}]];
+    if (loginEmail == 'admin@icia.com') {
+        // 로그인 했음
+        loginArea.innerHTML = "<a href='/member/List' class='btn btn-outline-light'><i class='fas fa-sign-out-alt'></i>회원목록</a>";
+    } else {
+        // 로그인 안했음
+        loginArea.innerHTML = "<a href='/member/detail' class='btn btn-outline-light'><i class='fas fa-sign-in-alt'></i>마이페이지</a>";
+    }
+</script>
 </div>
 </body>
+
 
 </html>

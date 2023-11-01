@@ -23,15 +23,10 @@ public class LikeEntity {
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
-    private CommentEntity commentEntity;
-
-    public static LikeEntity toLikeEntity(MemberEntity memberEntity, BoardEntity boardEntity, CommentEntity commentEntity) {
+    public static LikeEntity toLikeEntity(MemberEntity memberEntity, BoardEntity boardEntity) {
         LikeEntity likeEntity = new LikeEntity();
         likeEntity.setMemberEntity(memberEntity);
         likeEntity.setBoardEntity(boardEntity);
-        likeEntity.setCommentEntity(commentEntity);
         return likeEntity;
     }
 }

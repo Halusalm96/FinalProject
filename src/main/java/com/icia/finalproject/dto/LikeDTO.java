@@ -11,5 +11,4 @@ public class LikeDTO {
     private Long id;
     private Long memberId;
     private Long boardId;
-    private Long commentId;
 }

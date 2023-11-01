@@ -27,8 +27,6 @@ public class CommentEntity extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
-    @OneToMany(mappedBy = "commentEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LikeEntity> likeEntityList = new ArrayList<>();
 
     public static CommentEntity toSave(MemberEntity memberEntity, BoardEntity boardEntity,CommentDTO commentDTO) {
         CommentEntity commentEntity = new CommentEntity();
