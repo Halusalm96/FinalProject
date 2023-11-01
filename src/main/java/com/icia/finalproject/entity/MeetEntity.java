@@ -31,8 +31,6 @@ public class MeetEntity extends BaseEntity{
     private int meetFileAttached;
     @Column
     private int meetHits;
-    @Column
-    private int meetPoint;
     @Column (nullable = false, length = 50)
     private String meetMap;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +48,6 @@ public class MeetEntity extends BaseEntity{
         meetEntity.setMeetKind(meetDTO.getMeetKind());
         meetEntity.setMeetMap(meetDTO.getMeetMap());
         meetEntity.setMeetNumber(meetDTO.getMeetNumber());
-        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
         meetEntity.setMeetFileAttached(0);
         return meetEntity;
     }
@@ -64,7 +61,6 @@ public class MeetEntity extends BaseEntity{
         meetEntity.setMeetKind(meetDTO.getMeetKind());
         meetEntity.setMeetMap(meetDTO.getMeetMap());
         meetEntity.setMeetNumber(meetDTO.getMeetNumber());
-        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
         meetEntity.setMeetFileAttached(1);
         return meetEntity;
     }
@@ -80,7 +76,6 @@ public class MeetEntity extends BaseEntity{
         meetEntity.setMeetKind(meetDTO.getMeetKind());
         meetEntity.setMeetMap(meetDTO.getMeetMap());
         meetEntity.setMeetNumber(meetDTO.getMeetNumber());
-        meetEntity.setMeetPoint(meetDTO.getMeetPoint());
         meetEntity.setMeetFileAttached(1);
         return meetEntity;
     }

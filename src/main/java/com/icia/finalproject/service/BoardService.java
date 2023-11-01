@@ -54,10 +54,12 @@ public class BoardService {
     @Transactional
     public void save(BoardDTO boardDTO) throws IOException {
         if(boardDTO.getBoardFile().get(0).isEmpty()) {
-            BoardEntity boardEntity = BoardEntity.toSave(boardDTO);
+            MemberEntity memberEntity = memberRepository.findByMemberNickName(boardDTO.getBoardWriter()).orElseThrow(() -> new NoSuchElementException());
+            BoardEntity boardEntity = BoardEntity.toSave(memberEntity,boardDTO);
             boardRepository.save(boardEntity);
         } else {
-            BoardEntity boardEntity = BoardEntity.toBoardEntityWithFIle(boardDTO);
+            MemberEntity memberEntity = memberRepository.findByMemberNickName(boardDTO.getBoardWriter()).orElseThrow(() -> new NoSuchElementException());
+            BoardEntity boardEntity = BoardEntity.toBoardEntityWithFIle(memberEntity,boardDTO);
             BoardEntity saveEntity = boardRepository.save(boardEntity);
             for(MultipartFile boardFIle : boardDTO.getBoardFile()) {
                 String originalFilename = boardFIle.getOriginalFilename();

@@ -11,5 +11,5 @@ import lombok.*;
 public class MeetApplicationDTO {
     private Long id;
     private String applicationWriter;
-    private int memberPoint;
+    private Long meetIdDate;
 }

@@ -26,7 +26,6 @@
             <option value="재테크">재테크</option>
             <option value="외국어">외국어</option>
         </select>
-        <input type="number" name="meetPoint" class="form-control" th:value="${meet.meetPoint}">
         <input type="number" name="meetNumber" class="form-control" th:value="${meet.meetNumber}">
         <input type="text" name="meetMap" class="form-control" th:value="${meet.meetMap}">
         <input type="button" value="수정" onclick="meet_update()" class="btn btn-primary">
@@ -42,7 +41,6 @@
         const meetWriter = document.querySelector('[name="meetWriter"]').value;
         const meetTitle = document.querySelector('[name="meetTitle"]').value;
         const meetKind = document.querySelector('[name="meetKind"]').value;
-        const meetPoint = document.querySelector('[name="meetPoint"]').value;
         const meetContents = document.querySelector('[name="meetContents"]').value;
         const meetHits = document.querySelector('[name="meetHits"]').value;
         const meetNumber = document.querySelector('[name="meetNumber"]').value;
@@ -57,7 +55,6 @@
                 meetContents : meetContents,
                 meetHits : meetHits,
                 meetKind : meetKind,
-                meetPoint : meetPoint,
                 meetMap : meetMap,
                 meetNumber : meetNumber
             }

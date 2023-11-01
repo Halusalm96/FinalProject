@@ -29,34 +29,32 @@ public class BoardEntity extends BaseEntity{
     private int boardFileAttached;
     @Column
     private int boardHits;
-    @Column
-    private int boardPoint;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private MemberEntity memberEntity;
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
 
-    public static BoardEntity toSave(BoardDTO boardDTO) {
+    public static BoardEntity toSave(MemberEntity memberEntity,BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setMemberEntity(memberEntity);
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardKind(boardDTO.getBoardKind());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
-        boardEntity.setBoardPoint(boardDTO.getBoardPoint());
-        boardEntity.setBoardFileAttached(0);
+         boardEntity.setBoardFileAttached(0);
         return boardEntity;
     }
 
-    public static BoardEntity toBoardEntityWithFIle(BoardDTO boardDTO) {
+    public static BoardEntity toBoardEntityWithFIle(MemberEntity memberEntity,BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setMemberEntity(memberEntity);
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardKind(boardDTO.getBoardKind());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
-        boardEntity.setBoardPoint(boardDTO.getBoardPoint());
         boardEntity.setBoardFileAttached(1);
         return boardEntity;
     }
@@ -70,7 +68,6 @@ public class BoardEntity extends BaseEntity{
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
-        boardEntity.setBoardPoint(boardDTO.getBoardPoint());
         boardEntity.setBoardFileAttached(1);
         return boardEntity;
     }

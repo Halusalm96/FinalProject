@@ -6,7 +6,23 @@
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
-
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="findModal">확인</h5>
+      </div>
+      <div class="modal-body">
+        삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteNo">취소</button>
+        <button type="button" class="btn btn-primary" id="deleteYes">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
   <div>
@@ -16,7 +32,6 @@
     <p>게시물 종류: <span th:text="${boardDTO.boardKind}"></span></p>
     <p>작성일시: <span th:text="${boardDTO.createdAt}"></span></p>
     <p>조회수: <span th:text="${boardDTO.boardHits}"></span></p>
-    <p>포인트: <span th:text="${boardDTO.boardPoint}"></span></p>
     <p>첨부 파일 수: <span th:text="${boardDTO.boardFileAttached}"></span></p>
 
     <!-- 게시물 내용 -->
@@ -32,7 +47,7 @@
   <div id="btn-area">
     <button class="btn btn-primary" onclick="list_fn()">목록</button>
     <button th:if="${session.loginNickName == boardDTO.boardWriter}" class="btn btn-warning" onclick="update_req()">수정</button>
-    <button th:if="${session.loginNickName == boardDTO.boardWriter} or ${'admin' == session.loginEmail}" class="btn btn-danger" onclick="delete_req()">삭제</button>
+    <button th:if="${session.loginNickName == boardDTO.boardWriter} or ${'admin' == session.loginEmail}" class="btn btn-danger" id="delete">삭제</button>
   </div>
   <div id="pass-check" class="mt-3">
 
@@ -168,7 +183,25 @@
     const id = [[${boardDTO.id}]];
     location.href = `/board/update/${id}`;
   }
+  $(document).ready(function() {
+    // 모달 창 열기
+    $("#delete").click(function() {
+      $("#deleteModal").modal('show');
+    });
 
+    // 확인 버튼 클릭 시
+    $("#deleteYes").click(function() {
+      // application_req 함수 호출
+      delete_req();
+      // 모달 창 닫기
+      $("#deleteModal").modal('hide');
+    });
+    // 취소 버튼 클릭 시
+    $("#deleteNo").click(function() {
+      // 모달 창 닫기
+      $("#deleteModal").modal('hide');
+    });
+  });
   const delete_req = () => {
     const id = [[${boardDTO.id}]];
     location.href = `/board/delete/${id}`;

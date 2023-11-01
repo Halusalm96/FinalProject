@@ -1,5 +1,7 @@
 package com.icia.finalproject.entity;
 
+import com.icia.finalproject.dto.BoardDTO;
+import com.icia.finalproject.dto.MeetApplicationDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +18,17 @@ public class MeetApplicationEntity extends BaseEntity{
     private Long id;
     @Column (nullable = false, length = 50)
     private String applicationWriter;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
-    private MemberEntity memberEntity;
+    @Column
+    private Long meetIdDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meet_id", referencedColumnName = "id")
     private MeetEntity meetEntity;
+
+    public static MeetApplicationEntity toSave(MeetEntity meetEntity, MeetApplicationDTO meetApplicationDTO) {
+    MeetApplicationEntity meetApplicationEntity = new MeetApplicationEntity();
+    meetApplicationEntity.setMeetEntity(meetEntity);
+    meetApplicationEntity.setApplicationWriter(meetApplicationDTO.getApplicationWriter());
+    meetApplicationEntity.setMeetIdDate(meetApplicationDTO.getMeetIdDate());
+    return meetApplicationEntity;
+    }
 }

@@ -24,7 +24,6 @@ public class BoardDTO {
     private String boardWriter;
     private int boardFileAttached;
     private int boardHits;
-    private int boardPoint;
     private List<MultipartFile> boardFile;
     private String createdAt;
     private List<String> originalFileName = new ArrayList<>();
@@ -38,8 +37,7 @@ public class BoardDTO {
         boardDTO.setBoardContents(boardEntity.getBoardContents());
         boardDTO.setBoardWriter(boardEntity.getBoardWriter());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
-        boardDTO.setBoardPoint(boardEntity.getBoardPoint());
-        boardDTO.setCreatedAt((UtilClass.dateTimeFormat(boardEntity.getCreatedAt())));
+         boardDTO.setCreatedAt((UtilClass.dateTimeFormat(boardEntity.getCreatedAt())));
         if (boardEntity.getBoardFileAttached()==1){
             for(BoardFileEntity boardFileEntity : boardEntity.getBoardFileEntityList()) {
                 boardDTO.getOriginalFileName().add(boardFileEntity.getOriginalFileName());

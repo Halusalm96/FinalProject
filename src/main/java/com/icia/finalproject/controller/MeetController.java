@@ -2,9 +2,11 @@ package com.icia.finalproject.controller;
 
 import com.icia.finalproject.dto.BoardDTO;
 import com.icia.finalproject.dto.CommentDTO;
+import com.icia.finalproject.dto.MeetApplicationDTO;
 import com.icia.finalproject.dto.MeetDTO;
 import com.icia.finalproject.service.BoardService;
 import com.icia.finalproject.service.CommentService;
+import com.icia.finalproject.service.MeetApplicationService;
 import com.icia.finalproject.service.MeetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,6 +24,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class MeetController {
     private final MeetService meetService;
+    private final MeetApplicationService meetApplicationService;
     @GetMapping("/meet/list")
     public String meetList(Model model) {
         List<MeetDTO> meetDTOList = meetService.findAll();
@@ -61,6 +65,11 @@ public class MeetController {
     @PutMapping("/meet/{id}")
     public ResponseEntity update(@RequestBody MeetDTO meetDTO) {
         meetService.update(meetDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PostMapping("/meet/application")
+    public ResponseEntity applicationSave(@RequestBody MeetApplicationDTO meetApplicationDTO) throws IOException {
+        meetApplicationService.save(meetApplicationDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -31,8 +31,6 @@ public class MemberEntity extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String memberNickName;
     @Column
-    private int memberPoint;
-    @Column
     private int memberFileAttached;
     @Column(length = 30)
     private String memberBirth;
@@ -48,7 +46,6 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberArea(memberDTO.getMemberArea());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberNickName(memberDTO.getMemberNickName());
-        memberEntity.setMemberPoint(0);
         memberEntity.setMemberFileAttached(0);
         return memberEntity;
     }
@@ -63,7 +60,6 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberArea(memberDTO.getMemberArea());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberNickName(memberDTO.getMemberNickName());
-        memberEntity.setMemberPoint(memberDTO.getMemberPoint());
         memberEntity.setMemberFileAttached(memberDTO.getMemberFileAttached());
         return memberEntity;
     }
@@ -77,7 +73,6 @@ public class MemberEntity extends BaseEntity {
         memberEntity.setMemberArea(memberDTO.getMemberArea());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberNickName(memberDTO.getMemberNickName());
-        memberEntity.setMemberPoint(0);
         memberEntity.setMemberFileAttached(1);
         return memberEntity;
     }

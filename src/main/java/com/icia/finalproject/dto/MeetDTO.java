@@ -26,7 +26,6 @@ public class MeetDTO {
     private int meetFileAttached;
     private int meetHits;
     private String meetMap;
-    private int meetPoint;
     private List<MultipartFile> meetFile;
     private String createdAt;
     private List<String> originalFileName = new ArrayList<>();
@@ -42,7 +41,6 @@ public class MeetDTO {
         meetDTO.setMeetNumber(meetEntity.getMeetNumber());
         meetDTO.setMeetHits(meetEntity.getMeetHits());
         meetDTO.setMeetMap(meetEntity.getMeetMap());
-        meetDTO.setMeetPoint(meetEntity.getMeetPoint());
         meetDTO.setCreatedAt((UtilClass.dateTimeFormat(meetEntity.getCreatedAt())));
         if (meetEntity.getMeetFileAttached()==1){
             for(MeetFileEntity meetFileEntity : meetEntity.getMeetFileEntityList()) {

@@ -32,8 +32,6 @@
         <input type="text" name="memberNickName" id="nickName" th:value="${member.memberNickName}">
         <label for="name">이름</label>
         <input type="text" name="memberName" id="name" th:value="${member.memberName}">
-        <label for="point">포인트</label>
-        <input type="text" name="memberPoint" id="point" th:value="${member.memberPoint}" readonly>
         <label for="mobile">전화번호</label>
         <input type="text" name="memberMobile" id="mobile" th:value="${member.memberMobile}">
         <label for="birth">생년월일</label>
@@ -53,7 +51,6 @@
         const name = document.querySelector('[name="memberName"]').value;
         const nickName = document.querySelector('[name="memberNickName"]').value;
         const birth = document.querySelector('[name="memberBirth"]').value;
-        const point = document.querySelector('[name="memberPoint"]').value;
         const mobile = document.querySelector('[name="memberMobile"]').value;
         const id = document.querySelector('[name="memberId"]').value;
         const fileAttached = document.querySelector('[name="memberFileAttached"]').value;
@@ -72,7 +69,6 @@
                     memberName: name,
                     memberNickName: nickName,
                     memberBirth: birth,
-                    memberPoint: point,
                     memberFileAttached: fileAttached
                 }
             }).then(res => {

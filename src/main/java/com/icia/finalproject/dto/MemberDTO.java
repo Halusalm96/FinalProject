@@ -26,7 +26,6 @@ public class MemberDTO {
     private String memberMobile;
     private List<MultipartFile> memberFile;
     private int memberFileAttached;
-    private int memberPoint;
     private String createdAt;
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
