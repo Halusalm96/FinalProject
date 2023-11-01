@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -111,5 +112,11 @@ public class MemberController {
     @GetMapping("/member/password/find")
     public String passwordFind(){
         return "/memberPages/memberPasswordFind";
+    }
+    @GetMapping("/member/list")
+    public String memberList(Model model){
+        List<MemberDTO> memberDTOList = memberService.findAll();
+        model.addAttribute("memberList",memberDTOList);
+        return "/memberPages/memberList";
     }
 }

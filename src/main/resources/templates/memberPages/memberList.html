@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{component/nav :: nav}"></div>
+
+<div class="container">
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <h1>회원 목록</h1>
+    <div class="container mt-5 mb-5">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>닉네임</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th>가입날짜</th>
+                <th>기타</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${memberList}">
+                <td>
+                    <a class="btn btn-link" th:href="@{'/member/update/' + ${member.id}}" th:text="${member.memberNickName}"></a>
+                </td>
+                <td th:text="${member.memberEmail}"></td>
+                <td th:text="${member.memberPassword}"></td>
+                <td th:text="${member.createdAt}"></td>
+                <td>
+                    <button class="btn btn-danger" th:onclick="memberDelete_fn([[${member.id}]])">강제 탈퇴</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
+<script th:inline="javascript">
+    const memberDelete_fn = (id) => {
+        location.href = `/member/delete/${id}`;
+    }
+</script>
+</body>
+</html>

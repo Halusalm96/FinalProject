@@ -42,13 +42,13 @@ public class MeetDTO {
         meetDTO.setMeetHits(meetEntity.getMeetHits());
         meetDTO.setMeetMap(meetEntity.getMeetMap());
         meetDTO.setCreatedAt((UtilClass.dateTimeFormat(meetEntity.getCreatedAt())));
-        if (meetEntity.getMeetFileAttached()==1){
-            for(MeetFileEntity meetFileEntity : meetEntity.getMeetFileEntityList()) {
+        if (meetEntity.getMeetFileAttached() == 1) {
+            for (MeetFileEntity meetFileEntity : meetEntity.getMeetFileEntityList()) {
                 meetDTO.getOriginalFileName().add(meetFileEntity.getOriginalFileName());
                 meetDTO.getStoredFileName().add(meetFileEntity.getStoredFileName());
             }
             meetDTO.setMeetFileAttached(1);
-        }else{
+        } else {
             meetDTO.setMeetFileAttached(0);
         }
         return meetDTO;

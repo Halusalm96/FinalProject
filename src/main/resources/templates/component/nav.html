@@ -63,11 +63,13 @@
 <script th:inline="javascript">
     const loginArea = document.getElementById("login-area");
     const loginEmail = [[${session.loginEmail}]];
+    const Id = [[${session.loginId}]]
     if (loginEmail == 'admin@icia.com') {
         // 로그인 했음
-        loginArea.innerHTML = "<a href='/member/List' class='btn btn-outline-light'><i class='fas fa-sign-out-alt'></i>회원목록</a>";
+        loginArea.innerHTML = "<a href='/member/list' class='btn btn-outline-light'><i class='fas fa-sign-out-alt'></i>회원목록</a>";
     } else {
         // 로그인 안했음
+        loginArea.innerHTML = "<a href='/meet/list/{id}' class='btn btn-outline-light'><i class='fas fa-sign-in-alt'></i>모임 이력</a>";
         loginArea.innerHTML = "<a href='/member/detail' class='btn btn-outline-light'><i class='fas fa-sign-in-alt'></i>마이페이지</a>";
     }
 </script>

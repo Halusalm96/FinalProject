@@ -78,4 +78,5 @@ public class MeetService {
         MeetEntity meetEntity = MeetEntity.toUpdateEntity(memberEntity, meetDTO);
         meetRepository.save(meetEntity);
     }
+
 }

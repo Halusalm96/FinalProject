@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -71,5 +72,11 @@ public class MeetController {
     public ResponseEntity applicationSave(@RequestBody MeetApplicationDTO meetApplicationDTO) throws IOException {
         meetApplicationService.save(meetApplicationDTO);
         return new ResponseEntity(HttpStatus.OK);
+    }
+    @GetMapping("/meet/list/{id}")
+    public String meetList(@PathVariable("id") Long id, Model model) {
+        List<MeetApplicationDTO> meetApplicationDTOList = meetApplicationService.findByMemberId(id);
+        model.addAttribute("meetApplicationList", meetApplicationDTOList);
+        return "/meetPages/meetList";
     }
 }
