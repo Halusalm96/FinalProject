@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* 배경색 */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #343a40; /* 테이블 헤더 배경색 */
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1; /* 호버시 배경색 */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* 버튼 배경색 */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* 호버시 배경색 */
+        }
+
+        .message {
+            font-size: 18px;
+            color: #007bff; /* 메시지 색상 */
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 
 <div class="container">
-    <!-- 화면에 보여질 내용이 들어갈 부분 -->
-    <h1>게시물 목록</h1>
-    <div class="container mt-5 mb-5">
+    <h1 class="text-center mb-5">게시물 목록</h1>
+    <div class="container">
         <div th:if="${not #lists.isEmpty(boardList)}">
             <table class="table table-striped table-hover">
                 <thead>
@@ -17,6 +56,7 @@
                     <th>제목</th>
                     <th>작성자</th>
                     <th>이미지</th>
+                    <th>좋아요</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,9 +66,10 @@
                     </td>
                     <td th:text="${boardDTO.boardWriter}"></td>
                     <td>
-                        <!--            <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="img-thumbnail" alt="이미지">-->
+                        <!-- 이미지 미리보기 구현 -->
                     </td>
-                    <td><i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart"
+                    <td>
+                        <i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart"
                            th:onclick="like_fn()"></i>
                         <i th:unless="${boardDTO.isLike == 0}" class="bi bi-suit-heart-fill"
                            th:onclick="unlike_fn()"></i>
@@ -37,14 +78,15 @@
                 </tr>
                 </tbody>
             </table>
+            <a th:href="@{'/board/save'}" class="btn btn-primary">게시물 작성</a>
         </div>
-        <a th:href="@{'/board/save'}" class="btn btn-primary">게시물 작성</a>
-        <div th:if="${#lists.isEmpty(boardList)}">
-            <p>게시물이 없습니다.</p>
+        <div th:if="${#lists.isEmpty(boardList)}" class="message">
+            게시물이 없습니다.
         </div>
     </div>
-    <div th:replace="~{component/footer :: footer}"></div>
-</body>
+</div>
+
+<div th:replace="~{component/footer :: footer}"></div>
 <script th:inline="javascript">
     const unlike_fn = () => {
         const memberId = [[${session.loginId}]];
@@ -80,4 +122,5 @@
         });
     }
 </script>
+</body>
 </html>

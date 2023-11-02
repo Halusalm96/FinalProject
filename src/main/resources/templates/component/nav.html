@@ -4,42 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <div class="nav-container" th:fragment="nav">
-        <style>
+</head>
 
-        </style>
-        </head>
 <body>
-<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <div class="navbar-nav">
-            <a class="nav-link home" href="#">친목친목</a>
-            <a class="nav-link" href="/board/list">게시판</a>
-            <a class="nav-link" href="/meet/list">모임</a>
-        </div>
-        <div class="navbar-nav">
-            <div class="btn" id="login-meet"></div>
-            <div class="btn" id="login-main"></div>
-            <a class="btn" href="/member/logout">로그아웃</a>
+        <a class="navbar-brand" href="#">친목친목</a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/board/list">게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/meet/list">모임</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        정보
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li th:if="${session.loginEmail == 'admin@icia.com'}">
+                            <a href='/member/list' class="dropdown-item">회원목록</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/meet/application/list">모임 이력</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/member/detail">마이페이지</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/member/logout">로그아웃</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
+
 <script th:inline="javascript">
-    const loginMain = document.getElementById("login-main");
-    const loginMeet = document.getElementById("login-meet");
-    const loginEmail = [[${session.loginEmail}]];
-    const id = [[${session.loginId}]];
-    if (loginEmail == 'admin@icia.com') {
-        // 로그인 했음
-        loginMain.innerHTML = "<a href='/member/list' class='btn btn-outline-light'><i class='fas fa-sign-out-alt'></i>회원목록</a>";
-    } else {
-        // 로그인 안했음
-        loginMeet.innerHTML = "<a href='/meet/application/list' class='btn btn-outline-light'><i class='fas fa-sign-in-alt'></i>모임 이력</a>";
-        loginMain.innerHTML = "<a href='/member/detail' class='btn btn-outline-light'><i class='fas fa-sign-in-alt'></i>마이페이지</a>";
-    }
+
 </script>
-</div>
 </body>
-
-
 </html>
