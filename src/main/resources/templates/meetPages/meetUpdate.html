@@ -2,11 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000000;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #333333;
+            border-color: #333333;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #555555;
+            border-color: #555555;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 
-<div class="container mt-5 mb-5">
+<div class="container">
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
     <form action="/meet/update" method="post">
         작성자: <input type="text" name="meetWriter" class="form-control" th:value="${meet.meetWriter}" placeholder="작성자" readonly>
@@ -15,19 +43,19 @@
         <input type="hidden" name="id" th:value="${meet.id}">
         <input type="hidden" name="meetHits" th:value="${meet.meetHits}">
         종류 : <select id="meetKind" name="meetKind" th:value="${meet.meetKind}" required>
-            <option value="문화/예술">문화/예술</option>
-            <option value="운동/액티비티">운동/엑티비티</option>
-            <option value="푸드/드링크">푸드/드링크</option>
-            <option value="취미">취미</option>
-            <option value="여행/동행">여행/동행</option>
-            <option value="성장/자기계발">성장/자기계발</option>
-            <option value="동네/또래">동네/또래</option>
-            <option value="연애/소개팅">연애/소개팅</option>
-            <option value="재테크">재테크</option>
-            <option value="외국어">외국어</option>
-        </select>
-        <input type="number" name="meetNumber" class="form-control" th:value="${meet.meetNumber}">
-        <input type="text" name="meetMap" class="form-control" th:value="${meet.meetMap}">
+        <option value="문화/예술">문화/예술</option>
+        <option value="운동/액티비티">운동/엑티비티</option>
+        <option value="푸드/드링크">푸드/드링크</option>
+        <option value="취미">취미</option>
+        <option value="여행/동행">여행/동행</option>
+        <option value="성장/자기계발">성장/자기계발</option>
+        <option value="동네/또래">동네/또래</option>
+        <option value="연애/소개팅">연애/소개팅</option>
+        <option value="재테크">재테크</option>
+        <option value="외국어">외국어</option>
+    </select>
+        참여 인원 수: <input type="number" name="meetNumber" class="form-control" th:value="${meet.meetNumber}">
+        모임 장소: <input type="text" name="meetMap" class="form-control" th:value="${meet.meetMap}">
         <input type="button" value="수정" onclick="meet_update()" class="btn btn-primary">
     </form>
 </div>
@@ -66,16 +94,3 @@
     }
 </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

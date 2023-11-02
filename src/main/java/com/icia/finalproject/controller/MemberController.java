@@ -99,7 +99,6 @@ public class MemberController {
     }
     @PostMapping("/member/update")
     public String memberUpdate(@ModelAttribute MemberDTO memberDTO) {
-        System.out.println("memberDTO = " + memberDTO);
         memberService.update(memberDTO);
         return "/Home";
     }

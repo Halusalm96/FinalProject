@@ -2,6 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000000;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        .btn-primary {
+            background-color: #333333;
+            border-color: #333333;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #555555;
+            border-color: #555555;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
@@ -24,7 +57,7 @@
                         <a th:href="@{'/meet/' + ${meetApplicationDTO.meetIdDate}}" th:text="${meetApplicationDTO.meetName}"></a>
                     </td>
                     <td>
-                        <!--            <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="img-thumbnail" alt="이미지">-->
+                        <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="img-thumbnail" alt="이미지">
                     </td>
                 </tr>
                 </tbody>
@@ -36,5 +69,7 @@
         </div>
     </div>
     <div th:replace="~{component/footer :: footer}"></div>
+</div>
+
 </body>
 </html>

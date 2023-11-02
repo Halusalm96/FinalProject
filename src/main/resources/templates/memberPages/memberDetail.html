@@ -2,6 +2,44 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <style>
+        body {
+            background-color: #f2f2f2; /* 연한 회색 배경색 */
+            color: #333; /* 어두운 회색 텍스트 색상 */
+        }
+
+        .container {
+            background-color: #ffffff; /* 흰색 배경색 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        table th {
+            width: 200px;
+            font-weight: bold;
+        }
+
+        table td {
+            padding: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #cccccc; /* 연한 회색 버튼색 */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #999999; /* 진한 회색으로 변경 */
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>

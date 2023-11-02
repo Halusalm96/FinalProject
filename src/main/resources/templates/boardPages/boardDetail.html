@@ -3,6 +3,80 @@
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* board-details 클래스를 위한 CSS 스타일 */
+        .board-details {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* board-details 클래스 내부 요소를 위한 추가 스타일 */
+        .board-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .board-details p {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .board-details ul {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .board-details ul li {
+            margin-bottom: 5px;
+        }
+
+        .board-details i {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .board-details .ms-1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+        }
+
+        .btn-primary, .btn-secondary, .btn-dark, .btn-warning, .btn-danger {
+            background-color: #555555;
+            border: none;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover, .btn-dark:hover, .btn-warning:hover, .btn-danger:hover {
+            background-color: #333333;
+        }
+
+        .btn-primary:focus, .btn-secondary:focus, .btn-dark:focus, .btn-warning:focus, .btn-danger:focus {
+            box-shadow: none;
+        }
+
+        .table {
+            background-color: #ffffff;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
@@ -25,7 +99,7 @@
 </div>
 <div class="container">
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
-    <div>
+    <div class="board-details">
         <h2 th:text="${boardDTO.boardTitle}"></h2>
         <p style="display: none"><span th:value="${boardDTO.id}"></span></p>
         <p>작성자: <span th:text="${boardDTO.boardWriter}"></span></p>
@@ -43,10 +117,10 @@
                 <a th:href="'/download/' + ${fileName}" th:text="${fileName}"></a>
             </li>
         </ul>
-        <i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart"
-           th:onclick="like_fn()"></i>
-        <i th:unless="${boardDTO.isLike == 0}" class="bi bi-suit-heart-fill"
-           th:onclick="unlike_fn()"></i>
+
+        <!-- Like/Unlike 버튼 및 카운트 -->
+        <i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart" th:onclick="like_fn()"></i>
+        <i th:unless="${boardDTO.isLike == 0}" class="bi bi-suit-heart-fill" th:onclick="unlike_fn()"></i>
         <span class="ms-1" th:text="${boardDTO.likeCount}"></span>
     </div>
     <div id="btn-area">
@@ -80,7 +154,6 @@
                     <th colspan="3">date</th>
                 </tr>
                 <tr th:each="comment: ${commentDTO}">
-
                     <td th:text="${comment.commentWriter}"></td>
                     <td th:text="${comment.commentContents}"></td>
                     <td th:text="${comment.createdAt}"></td>
@@ -88,9 +161,7 @@
             </table>
         </div>
     </div>
-
     <div th:replace="~{component/footer :: footer}"></div>
-
 </body>
 <script th:inline="javascript">
     const like_fn = () => {

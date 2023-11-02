@@ -21,7 +21,7 @@ public class FollowEntity {
     private Long id;
     @Column
     private Long toUserId;
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity memberEntity;
 
