@@ -80,6 +80,7 @@
                     <th colspan="3">date</th>
                 </tr>
                 <tr th:each="comment: ${commentDTO}">
+
                     <td th:text="${comment.commentWriter}"></td>
                     <td th:text="${comment.commentContents}"></td>
                     <td th:text="${comment.createdAt}"></td>
