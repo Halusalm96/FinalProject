@@ -10,21 +10,19 @@
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
     <h1>게시물 목록</h1>
     <div class="container mt-5 mb-5">
-        <div th:if="${not #lists.isEmpty(meetList)}">
+        <div th:if="${not #lists.isEmpty(meetApplicationList)}">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>제목</th>
-                    <th>작성자</th>
                     <th>이미지</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="meetDTO : ${meetList}">
+                <tr th:each="meetApplicationDTO : ${meetApplicationList}">
                     <td>
-                        <a th:href="@{'/meet/' + ${meetDTO.id}}" th:text="${meetDTO.meetTitle}"></a>
+                        <a th:href="@{'/meet/' + ${meetApplicationDTO.meetIdDate}}" th:text="${meetApplicationDTO.meetName}"></a>
                     </td>
-                    <td th:text="${meetDTO.meetWriter}"></td>
                     <td>
                         <!--            <img th:src="@{'/download/' + ${boardDTO.originalFileName[0]}}" class="img-thumbnail" alt="이미지">-->
                     </td>
@@ -32,13 +30,11 @@
                 </tbody>
             </table>
         </div>
-        <a th:href="@{'/meet/save'}" class="btn btn-primary">게시물 작성</a>
-        <div th:if="${#lists.isEmpty(meetList)}">
+        <a th:href="@{'/meet/list'}" class="btn btn-primary">모임</a>
+        <div th:if="${#lists.isEmpty(meetApplicationList)}">
             <p>게시물이 없습니다.</p>
         </div>
     </div>
     <div th:replace="~{component/footer :: footer}"></div>
 </body>
-<script th:inline="javascript">
-</script>
 </html>

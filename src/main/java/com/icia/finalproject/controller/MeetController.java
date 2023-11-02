@@ -1,11 +1,7 @@
 package com.icia.finalproject.controller;
 
-import com.icia.finalproject.dto.BoardDTO;
-import com.icia.finalproject.dto.CommentDTO;
 import com.icia.finalproject.dto.MeetApplicationDTO;
 import com.icia.finalproject.dto.MeetDTO;
-import com.icia.finalproject.service.BoardService;
-import com.icia.finalproject.service.CommentService;
 import com.icia.finalproject.service.MeetApplicationService;
 import com.icia.finalproject.service.MeetService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -73,10 +68,11 @@ public class MeetController {
         meetApplicationService.save(meetApplicationDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
-    @GetMapping("/meet/list/{id}")
-    public String meetList(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/meet/application/list")
+    public String meetList(Model model, HttpSession session) {
+        Long id = (Long) session.getAttribute("loginId");
         List<MeetApplicationDTO> meetApplicationDTOList = meetApplicationService.findByMemberId(id);
         model.addAttribute("meetApplicationList", meetApplicationDTOList);
-        return "/meetPages/meetList";
+        return "/meetPages/meetApplicationList";
     }
 }

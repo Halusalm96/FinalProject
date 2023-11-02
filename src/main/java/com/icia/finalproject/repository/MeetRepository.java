@@ -12,6 +12,5 @@ public interface MeetRepository extends JpaRepository<MeetEntity,Long> {
     @Modifying
     @Query(value = "update MeetEntity b set b.meetHits=b.meetHits+1 where b.id=:id")
     void increaseHits(@Param("id") Long id);
-
-    List<MeetEntity> findByMemberId(Long memberId);
+    
 }
