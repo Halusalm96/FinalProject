@@ -43,6 +43,7 @@
             font-size: 18px;
             font-weight: bold;
         }
+
         body {
             background-color: #f2f2f2;
             font-family: Arial, sans-serif;
@@ -102,11 +103,10 @@
     <div class="board-details">
         <h2 th:text="${boardDTO.boardTitle}"></h2>
         <p style="display: none"><span th:value="${boardDTO.id}"></span></p>
-        <p>작성자: <span th:text="${boardDTO.boardWriter}"></span></p>
-        <p>게시물 종류: <span th:text="${boardDTO.boardKind}"></span></p>
-        <p>작성일시: <span th:text="${boardDTO.createdAt}"></span></p>
-        <p>조회수: <span th:text="${boardDTO.boardHits}"></span></p>
-        <p>첨부 파일 수: <span th:text="${boardDTO.boardFileAttached}"></span></p>
+        <p>작성자 : <span th:text="${boardDTO.boardWriter}"></span></p>
+        <p>게시물 종류 : <span th:text="${boardDTO.boardKind}"></span></p>
+        <p>작성일시 : <span th:text="${boardDTO.createdAt}"></span></p>
+        <p>조회수 : <span th:text="${boardDTO.boardHits}"></span></p>
 
         <!-- 게시물 내용 -->
         <div th:text="${boardDTO.boardContents}"></div>
@@ -117,7 +117,9 @@
                 <a th:href="'/download/' + ${fileName}" th:text="${fileName}"></a>
             </li>
         </ul>
-
+        <p th:each="fileName: ${boardDTO.storedFileName}" th:if="${boardDTO.boardFileAttached == 1}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </p>
         <!-- Like/Unlike 버튼 및 카운트 -->
         <i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart" th:onclick="like_fn()"></i>
         <i th:unless="${boardDTO.isLike == 0}" class="bi bi-suit-heart-fill" th:onclick="unlike_fn()"></i>
@@ -136,11 +138,16 @@
 
     </div>
     <div class="row g-2 mt-5" id="comment-write">
-        <form class="login-form" action="/comment/save" method="post">
-            <input type="text" name="commentWriter" th:value="${session.loginNickName}" readonly>
-            <input type="text" name="commentContents" placeholder="내용">
-            <button type="submit" class="btn btn-dark">등록</button>
-        </form>
+        <div class="col">
+            <input type="text" id="comment-writer" th:value="${session.loginNickName}" class="form-control"
+                   placeholder="작성자" readonly>
+        </div>
+        <div class="col-9">
+            <input type="text" id="comment-contents" class="form-control" placeholder="내용">
+        </div>
+        <div class="d-grid col">
+            <button class="btn btn-dark" onclick="comment_write()">작성</button>
+        </div>
     </div>
     <div class="container mt-5" id="comment-list">
         <div th:if="${commentDTO== null}">
@@ -157,6 +164,11 @@
                     <td th:text="${comment.commentWriter}"></td>
                     <td th:text="${comment.commentContents}"></td>
                     <td th:text="${comment.createdAt}"></td>
+                    <td>
+                        <button th:if="${session.loginNickName == comment.commentWriter} or ${'admin@icia.com' == session.loginEmail}"
+                                class="btn btn-danger" id="delete_comment" th:onclick="commentDelete_fn([[${member.id}]])">삭제
+                        </button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -164,6 +176,51 @@
     <div th:replace="~{component/footer :: footer}"></div>
 </body>
 <script th:inline="javascript">
+    const commentDelete_fn = (id) => {
+        location.href = `/comment/delete/${id}`;
+    }
+    const comment_list = (commentList) => {
+        console.log("댓글 목록 함수", commentList);
+        const resultArea = document.querySelector("#comment-list");
+        let output = "        <table class=\"table\">\n" +
+            "            <tr>\n" +
+            "                <th>writer</th>\n" +
+            "                <th>contents</th>\n" +
+            "                <th colspan=\"3\">date</th>\n" +
+            "            </tr>";
+        for (let i in commentList) {
+            output += "<tr>\n" +
+                "                <td>" + commentList[i].commentWriter + "</td>\n" +
+                "                <td>" + commentList[i].commentContents + "</td>\n" +
+                "                <td>" + commentList[i].createdAt + "</td>\n";
+            output += "</td></tr>";
+        }
+        output += "</table>";
+        resultArea.innerHTML = output;
+    }
+
+    const comment_write = () => {
+        const writer = document.querySelector("#comment-writer").value;
+        const contents = document.querySelector("#comment-contents").value;
+        const boardId = [[${board.id}]];
+        axios({
+            method: "post",
+            url: "/comment/save",
+            data: {
+                commentWriter: writer,
+                commentContents: contents,
+                boardId: boardId
+            }
+        }).then(res => {
+            console.log("res", res);
+            console.log("댓글 목록", res.data);
+            document.querySelector("#comment-writer").value = "";
+            document.querySelector("#comment-contents").value = "";
+            comment_list(res.data);
+        }).catch(err => {
+            console.log("err", err);
+        });
+    }
     const like_fn = () => {
         const memberId = [[${session.loginId}]];
         const boardId = [[${boardDTO.id}]];

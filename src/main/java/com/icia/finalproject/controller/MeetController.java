@@ -70,8 +70,8 @@ public class MeetController {
     }
     @GetMapping("/meet/application/list")
     public String meetList(Model model, HttpSession session) {
-        Long id = (Long) session.getAttribute("loginId");
-        List<MeetApplicationDTO> meetApplicationDTOList = meetApplicationService.findByMemberId(id);
+        Long memberId = (Long) session.getAttribute("loginId");
+        List<MeetApplicationDTO> meetApplicationDTOList = meetApplicationService.findByMemberId(memberId);
         model.addAttribute("meetApplicationList", meetApplicationDTOList);
         return "/meetPages/meetApplicationList";
     }

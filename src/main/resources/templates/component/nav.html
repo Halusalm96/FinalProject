@@ -4,6 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .profile-image {
+            width: 30px; /* 프로필 사진의 너비 설정 */
+            height: 30px; /* 프로필 사진의 높이 설정 */
+            border-radius: 50%; /* 원형 프로필 사진을 위한 모양 설정 */
+            object-fit: cover; /* 프로필 사진을 잘라서 보여주도록 설정 */
+            margin-left: 10px; /* 네비게이션 바와 프로필 사진 간의 간격 설정 */
+        }
+    </style>
 </head>
 
 <body>
@@ -17,6 +26,10 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/meet/list">모임</a>
+                </li>
+                <li>
+                    <!-- Thymeleaf를 사용하여 프로필 사진을 동적으로 추가 -->
+                    <img class="profile-image" th:src="@{|/upload/${fileName}}" alt="프로필 사진">
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

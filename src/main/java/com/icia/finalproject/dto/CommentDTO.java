@@ -25,9 +25,11 @@ public class CommentDTO {
     public static CommentDTO toCommentList(CommentEntity commentEntity) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(commentEntity.getId());
+        commentDTO.setBoardId(commentEntity.getBoardEntity().getId());
         commentDTO.setCommentWriter(commentEntity.getCommentWriter());
         commentDTO.setCommentContents(commentEntity.getCommentContents());
         commentDTO.setCreatedAt((UtilClass.dateTimeFormat(commentEntity.getCreatedAt())));
+        commentDTO.setUpdatedAt(UtilClass.dateTimeFormat(commentEntity.getUpdateAt()));
         return commentDTO;
     }
 }

@@ -8,9 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,10 +19,19 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/save")
-    public String commentSave(@ModelAttribute CommentDTO commentDTO, Model model) throws Exception {
-        commentService.save(commentDTO);
-        List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
-        model.addAttribute("commentDTO", commentDTOList);
-        return "redirect:/board/{commentDTO.getBoardId()}";
+    public ResponseEntity commentSave(@ModelAttribute CommentDTO commentDTO, HttpSession session) {
+        Long memberId = (Long) session.getAttribute("loginId");
+        try {
+            commentService.save(commentDTO);
+            List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
+            return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/comment/delete/{id}")
+    public String commentDelete (@PathVariable("id") Long id) {
+        commentService.delete(id);
+        return "redirect:/board/list";
     }
 }

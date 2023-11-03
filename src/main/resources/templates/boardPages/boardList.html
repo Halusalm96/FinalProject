@@ -53,21 +53,21 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
+                    <th>이미지</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>이미지</th>
                     <th>좋아요</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="boardDTO : ${boardList}">
+                    <td th:each="fileName: ${boardDTO.storedFileName}" th:if="${boardDTO.boardFileAttached == 1}">
+                        <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+                    </td>
                     <td>
                         <a th:href="@{'/board/' + ${boardDTO.id}}" th:text="${boardDTO.boardTitle}"></a>
                     </td>
                     <td th:text="${boardDTO.boardWriter}"></td>
-                    <td>
-                        <!-- 이미지 미리보기 구현 -->
-                    </td>
                     <td>
                         <i th:if="${boardDTO.isLike == 0}" class="bi bi-suit-heart"
                            th:onclick="like_fn()"></i>

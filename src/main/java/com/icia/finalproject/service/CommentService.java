@@ -1,15 +1,11 @@
 package com.icia.finalproject.service;
 
-import com.icia.finalproject.dto.BoardDTO;
 import com.icia.finalproject.dto.CommentDTO;
-import com.icia.finalproject.dto.LikeDTO;
 import com.icia.finalproject.entity.BoardEntity;
 import com.icia.finalproject.entity.CommentEntity;
-import com.icia.finalproject.entity.LikeEntity;
 import com.icia.finalproject.entity.MemberEntity;
 import com.icia.finalproject.repository.BoardRepository;
 import com.icia.finalproject.repository.CommentRepository;
-import com.icia.finalproject.repository.LikeRepository;
 import com.icia.finalproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,19 +26,24 @@ public class CommentService {
     private final MemberRepository memberRepository;
 
     public Long save(CommentDTO commentDTO) throws IOException {
-        MemberEntity memberEntity = memberRepository.findByMemberEmail(commentDTO.getCommentWriter()).orElseThrow(() -> new NoSuchElementException());
-        BoardEntity boardEntity = boardRepository.findById(commentDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity memberEntity = memberRepository.findByMemberNickName(commentDTO.getCommentWriter()).orElseThrow(() -> new NoSuchElementException());
+        BoardEntity boardEntity = boardRepository.findById(commentDTO.getBoardId()).orElseThrow(() -> new NoSuchElementException());
         CommentEntity commentEntity = CommentEntity.toSave(memberEntity, boardEntity, commentDTO);
         return commentRepository.save(commentEntity).getId();
     }
 
     @Transactional
-    public List<CommentDTO> findAll(Long boardId) {
-        List<CommentEntity> commentEntityList = commentRepository.findAll();
+    public List<CommentDTO> findAll(Long id) {
+        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntity(boardEntity);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         for (CommentEntity commentEntity : commentEntityList) {
             commentDTOList.add(CommentDTO.toCommentList(commentEntity));
         }
         return commentDTOList;
+    }
+
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
     }
 }

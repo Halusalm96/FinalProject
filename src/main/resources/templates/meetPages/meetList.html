@@ -53,20 +53,23 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
+                    <th>이미지</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>이미지</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="meetDTO : ${meetList}">
+                    <td th:each="fileName: ${meetDTO.storedFileName}" th:if="${meetDTO.meetFileAttached == 1}">
+                        <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+                    </td>
+<!--                    <td th:each="fileName: ${meetDTO.storedFileName}" th:if="${meetDTO.meetFileAttached == 0}">-->
+<!--                        <img th:src="@{|/upload/'기본사진'}" width="200" height="200" alt="">-->
+<!--                    </td>-->
                     <td>
                         <a th:href="@{'/meet/' + ${meetDTO.id}}" th:text="${meetDTO.meetTitle}"></a>
                     </td>
                     <td th:text="${meetDTO.meetWriter}"></td>
-                    <td>
-                        <!-- 이미지 미리보기 구현 -->
-                    </td>
                 </tr>
                 </tbody>
             </table>
