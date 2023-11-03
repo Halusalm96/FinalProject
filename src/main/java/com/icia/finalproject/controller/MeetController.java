@@ -69,7 +69,7 @@ public class MeetController {
         return new ResponseEntity(HttpStatus.OK);
     }
     @GetMapping("/meet/application/list")
-    public String meetList(Model model, HttpSession session) {
+    public String meetApplicationList(Model model, HttpSession session) {
         Long memberId = (Long) session.getAttribute("loginId");
         List<MeetApplicationDTO> meetApplicationDTOList = meetApplicationService.findByMemberId(memberId);
         model.addAttribute("meetApplicationList", meetApplicationDTOList);
