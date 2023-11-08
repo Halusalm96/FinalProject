@@ -3,7 +3,6 @@ package com.icia.finalproject.dto;
 import com.icia.finalproject.entity.BoardEntity;
 import com.icia.finalproject.entity.BoardFileEntity;
 import com.icia.finalproject.entity.LikeEntity;
-import com.icia.finalproject.entity.MemberFileEntity;
 import com.icia.finalproject.util.UtilClass;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<CommentEntity,Long> {
 
-    List<CommentEntity> findByBoardEntity(Optional<BoardEntity> boardId);
+//    List<CommentEntity> findByBoardEntity(Optional<BoardEntity> boardId);
+
+    List<CommentEntity> findByBoardEntityOrderByIdDesc(BoardEntity boardEntity);
 }

@@ -33,13 +33,16 @@ public class CommentService {
     }
 
     @Transactional
-    public List<CommentDTO> findAll(Long id) {
-        Optional<BoardEntity> boardEntity = boardRepository.findById(id);
-        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntity(boardEntity);
+    public List<CommentDTO> findAll(Long boardId) {
+        BoardEntity boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new NoSuchElementException());
+        List<CommentEntity> commentEntityList = commentRepository.findByBoardEntityOrderByIdDesc(boardEntity);
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        for (CommentEntity commentEntity : commentEntityList) {
-            commentDTOList.add(CommentDTO.toCommentList(commentEntity));
-        }
+        commentEntityList.forEach(comment -> {
+            commentDTOList.add(CommentDTO.toCommentList(comment));
+        });
+//        for (CommentEntity commentEntity : commentEntityList) {
+//            commentDTOList.add(CommentDTO.toCommentList(commentEntity));
+//        }
         return commentDTOList;
     }
 

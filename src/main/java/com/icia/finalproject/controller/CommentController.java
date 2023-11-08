@@ -19,8 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/save")
-    public ResponseEntity commentSave(@ModelAttribute CommentDTO commentDTO, HttpSession session) {
-        Long memberId = (Long) session.getAttribute("loginId");
+    public ResponseEntity commentSave(@RequestBody CommentDTO commentDTO) {
         try {
             commentService.save(commentDTO);
             List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());

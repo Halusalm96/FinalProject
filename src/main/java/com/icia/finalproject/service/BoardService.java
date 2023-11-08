@@ -58,7 +58,6 @@ public class BoardService {
             BoardEntity boardEntity = boardEntityOptional.get();
             MemberEntity memberEntity = memberEntityOptional.get();
             List<LikeEntity> likeEntityList = likeRepository.findByMemberEntityAndBoardEntity(memberEntity, boardEntity);
-
             BoardDTO boardDTO = BoardDTO.toBoardList(boardEntity, likeEntityList);
             return boardDTO;
         } else {

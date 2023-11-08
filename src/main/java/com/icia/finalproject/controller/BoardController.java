@@ -40,9 +40,9 @@ public class BoardController {
             model.addAttribute("boardDTO", boardDTO);
             List<CommentDTO> commentDTOList = commentService.findAll(id);
             if (commentDTOList.size() > 0) {
-                model.addAttribute("commentDTO", commentDTOList);
+                model.addAttribute("commentDTOList", commentDTOList);
             } else {
-                model.addAttribute("commentDTO", null);
+                model.addAttribute("commentDTOList", null);
             }
             return "/boardPages/boardDetail";
         } catch (NoSuchElementException e) {
