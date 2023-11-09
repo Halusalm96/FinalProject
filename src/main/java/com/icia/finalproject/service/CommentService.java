@@ -25,11 +25,11 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
-    public Long save(CommentDTO commentDTO) throws IOException {
+    public void save(CommentDTO commentDTO){
         MemberEntity memberEntity = memberRepository.findByMemberNickName(commentDTO.getCommentWriter()).orElseThrow(() -> new NoSuchElementException());
         BoardEntity boardEntity = boardRepository.findById(commentDTO.getBoardId()).orElseThrow(() -> new NoSuchElementException());
         CommentEntity commentEntity = CommentEntity.toSave(memberEntity, boardEntity, commentDTO);
-        return commentRepository.save(commentEntity).getId();
+        commentRepository.save(commentEntity);
     }
 
     @Transactional
@@ -40,9 +40,6 @@ public class CommentService {
         commentEntityList.forEach(comment -> {
             commentDTOList.add(CommentDTO.toCommentList(comment));
         });
-//        for (CommentEntity commentEntity : commentEntityList) {
-//            commentDTOList.add(CommentDTO.toCommentList(commentEntity));
-//        }
         return commentDTOList;
     }
 

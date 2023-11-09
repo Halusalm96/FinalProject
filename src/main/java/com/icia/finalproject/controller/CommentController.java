@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-
     @PostMapping("/comment/save")
     public ResponseEntity commentSave(@RequestBody CommentDTO commentDTO) {
         try {
